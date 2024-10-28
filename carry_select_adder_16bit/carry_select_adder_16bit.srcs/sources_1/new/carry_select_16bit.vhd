@@ -53,7 +53,12 @@ signal sum_0, sum_1: STD_LOGIC_VECTOR(12 downto 0);
 
 begin
 
-ripplecarry0_0: ripplecarry_4bit PORT MAP (A(3 downto 0), B(3 downto 0), '0', carry_start, sum(3 downto 0));
+ripplecarry0_0: ripplecarry_4bit PORT MAP (
+  A_4 => A(3 downto 0),
+  B_4 => B(3 downto 0), 
+  carry_in => '0', 
+  carry_out => carry_start, 
+  sum_4 => sum(3 downto 0));
 
 ripplecarry1_0: ripplecarry_4bit PORT MAP (A(7 downto 4), B(7 downto 4), '0', carry0(0), sum_0(3 downto 0));
 ripplecarry1_1: ripplecarry_4bit PORT MAP (A(7 downto 4), B(7 downto 4), '1', carry1(0), sum_1(3 downto 0));
@@ -82,6 +87,15 @@ process(carry_start) begin
     when  others => 
       sum( 11 downto 8 ) <= sum_1(7 downto 4);
         carry_selector <= carry1(1);
+    end case;
+    
+        case carry_selector is
+      when '0' => 
+      sum( 15 downto 12 ) <= sum_0(11 downto 8);
+      carry_selector <= carry0(2);
+    when  others => 
+      sum( 15 downto 12 ) <= sum_1(11 downto 8);
+        carry_selector <= carry1(2);
     end case;
     
   end process;
