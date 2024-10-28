@@ -34,8 +34,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity ripplecarry_4bit is
     Port ( A_4 : in STD_LOGIC_VECTOR (3 downto 0);
            B_4 : in STD_LOGIC_VECTOR (3 downto 0);
-           carry_in_4 : in STD_LOGIC;
-           carry_out_4 : out STD_LOGIC;
+           carry_in : in STD_LOGIC;
+           carry_out : out STD_LOGIC;
            sum_4 : out STD_LOGIC_VECTOR (3 downto 0));
 end ripplecarry_4bit;
 

@@ -47,7 +47,8 @@ component ripplecarry_4bit is
            sum_4 : out STD_LOGIC_VECTOR (3 downto 0));
 end component;
 
-signal carry_start, carry_selector: STD_LOGIC;
+shared variable carry_selector: STD_LOGIC;
+signal carry_start: STD_LOGIC;
 signal carry0, carry1: STD_LOGIC_VECTOR(2 downto 0);
 signal sum_0, sum_1: STD_LOGIC_VECTOR(12 downto 0);
 
@@ -69,33 +70,33 @@ ripplecarry2_1: ripplecarry_4bit PORT MAP (A(11 downto 8), B(11 downto 8), '1', 
 ripplecarry3_0: ripplecarry_4bit PORT MAP (A(15 downto 12), B(15 downto 12), '0', carry0(2), sum_0(11 downto 8));
 ripplecarry3_1: ripplecarry_4bit PORT MAP (A(15 downto 12), B(15 downto 12), '1', carry1(2), sum_1(11 downto 8));
 
-process(carry_start) begin
+process(carry_start, sum_0, sum_1, carry_start) begin
 
   case carry_start is
     when '0' => 
       sum( 7 downto 4 ) <= sum_0(3 downto 0);
-      carry_selector <= carry0(0);
+      carry_selector := carry0(0);
     when  others => 
       sum( 7 downto 4 ) <= sum_1(3 downto 0);
-        carry_selector <= carry1(0);
+        carry_selector := carry1(0);
     end case;
     
     case carry_selector is
       when '0' => 
       sum( 11 downto 8 ) <= sum_0(7 downto 4);
-      carry_selector <= carry0(1);
+      carry_selector := carry0(1);
     when  others => 
       sum( 11 downto 8 ) <= sum_1(7 downto 4);
-        carry_selector <= carry1(1);
+        carry_selector := carry1(1);
     end case;
     
         case carry_selector is
       when '0' => 
       sum( 15 downto 12 ) <= sum_0(11 downto 8);
-      carry_selector <= carry0(2);
+      carry_selector := carry0(2);
     when  others => 
       sum( 15 downto 12 ) <= sum_1(11 downto 8);
-        carry_selector <= carry1(2);
+        carry_selector := carry1(2);
     end case;
     
   end process;
