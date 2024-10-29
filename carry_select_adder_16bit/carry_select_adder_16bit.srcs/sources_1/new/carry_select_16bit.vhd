@@ -1,41 +1,23 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-- Company:  Univerostà della Calabria
+-- Engineers: Frega Umberto, Napoli Leonardo
 -- 
 -- Create Date: 10/28/2024 04:37:15 PM
--- Design Name: 
 -- Module Name: carry_select_16bit - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
+-- Project Name: Addizionatore Carry architecture
+
+-- Revision 0.01 - File architecture
+
 ----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity carry_select_16bit is
     Port ( A : in STD_LOGIC_VECTOR (15 downto 0);
          B : in STD_LOGIC_VECTOR (15 downto 0);
+         carry_in_start: in STD_LOGIC;
          sum : out STD_LOGIC_VECTOR (15 downto 0);
-         carry_in_start: in STD_LOGIC);
+         carry_out_final: out STD_LOGIC );
 end carry_select_16bit;
 
 architecture Behavioral of carry_select_16bit is
@@ -100,7 +82,7 @@ begin
             carry_in => '1',
             carry_out => carry1(2),
             sum_4 => sum_1(11 downto 8));
-
+   
 
     process(carry_start, sum_0, sum_1, carry_start) begin
 
@@ -130,7 +112,7 @@ begin
                 sum( 15 downto 12 ) <= sum_1(11 downto 8);
                 carry_selector := carry1(2);
         end case;
-
+        carry_out_final <= carry_selector;
     end process;
 
 
