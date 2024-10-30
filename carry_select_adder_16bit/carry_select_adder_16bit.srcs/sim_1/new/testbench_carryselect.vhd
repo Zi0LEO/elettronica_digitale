@@ -58,7 +58,7 @@ begin
 
         -- Test dei Risultati
         assert (Os = "0000000000000010" AND Ocout = '0')
-        report "Caso 1 Fallito" severity error;
+        report "Test 1 Fallito" severity error;
 
         -- Test 2: Addizione semplice con carry in
         Ia <= "0000000000000001";
