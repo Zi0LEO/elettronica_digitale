@@ -42,7 +42,8 @@ end ripplecarry_4bit;
 architecture Behavioral of ripplecarry_4bit is
 
     component fulladder_1bit is
-        Port ( A : in STD_LOGIC;
+        Port ( 
+             A : in STD_LOGIC;
              B : in STD_LOGIC;
              carry_in : in STD_LOGIC;
              carry_out : out STD_LOGIC;
@@ -51,11 +52,10 @@ architecture Behavioral of ripplecarry_4bit is
 
     signal sum, carry: STD_LOGIC_VECTOR(3 downto 0);
 begin
-    fa0: fulladder_1bit PORT MAP( A_4(0), B_4(0), carry_in, carry(0), sum(0) );
-    fa1: fulladder_1bit PORT MAP( A_4(1), B_4(1), carry(0), carry(1), sum(1) );
-    fa2: fulladder_1bit PORT MAP( A_4(2), B_4(2), carry(1), carry(2), sum(2) );
-    fa3: fulladder_1bit PORT MAP( A_4(3), B_4(3), carry(2), carry(3), sum(3) );
-    sum_4 <= sum;
+    fa0: fulladder_1bit PORT MAP( A_4(0), B_4(0), carry_in, carry(0), sum_4(0) );
+    fa1: fulladder_1bit PORT MAP( A_4(1), B_4(1), carry(0), carry(1), sum_4(1) );
+    fa2: fulladder_1bit PORT MAP( A_4(2), B_4(2), carry(1), carry(2), sum_4(2) );
+    fa3: fulladder_1bit PORT MAP( A_4(3), B_4(3), carry(2), carry(3), sum_4(3) );
     carry_out <= carry(3);
 
 end Behavioral;

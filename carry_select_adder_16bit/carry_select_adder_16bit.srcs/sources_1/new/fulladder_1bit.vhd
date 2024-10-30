@@ -46,7 +46,7 @@ begin
   p <= A xor B;
   carry_out <= A when p='0' else
                carry_in when p='1' else 'X';
-  sum <= p xor carry_in;
+sum <= p xor carry_in;
 
 
 end Behavioral;
