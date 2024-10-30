@@ -44,7 +44,8 @@ signal p: STD_LOGIC;
 
 begin
   p <= A xor B;
-  carry_out <= (A and B) or (p and carry_in);
+  carry_out <= A when p='0' else
+               carry_in when p='1' else 'X';
   sum <= p xor carry_in;
 
 
