@@ -43,26 +43,20 @@ architecture Behavioral of testbench_ripplecarry is
              carry_out : out STD_LOGIC;
              sum_4 : out STD_LOGIC_VECTOR (3 downto 0));
     end component;
-
     signal Ia,Ib,Osum: std_logic_vector (3 downto 0);
     signal Icin,Ocout:std_logic;
 begin
     CUT: ripplecarry_4bit port map (Ia,Ib,Icin,Ocout ,Osum);
     process
     begin
-
         --Test 1: caso base, A = 0, B = 0, carry = 0
-        Ia <= "0000";
-        Ib <= "0000";
-        Icin <= '0';
+        Ia <= "0000"; Ib <= "0000"; Icin <= '0';
         wait for 10ns;
         assert ( Osum = "0000" and Ocout = '0')
         report "Test case 1 Failed" severity error;
 
         --Test 2: A = 1, B = 1, carry = 0
-        Ia <= "0001";
-        Ib <= "0001";
-        Icin <= '0';
+        Ia <= "0001"; Ib <= "0001"; Icin <= '0';
         wait for 10ns;
         assert ( Osum = "0010" and Ocout = '0')
         report "Test case 2 Failed" severity error;
@@ -102,5 +96,7 @@ begin
         wait for 10 ns;
         assert (Osum = "0000" and Ocout = '1') 
         report "Test case 8 failed" severity error;
+        
+        report "Tutti i test sono stati completati con successo!" severity note;
     end process;
 end Behavioral;

@@ -48,5 +48,4 @@ begin
                carry_in when p='1' else 'X';
 sum <= p xor carry_in;
 
-
 end Behavioral;

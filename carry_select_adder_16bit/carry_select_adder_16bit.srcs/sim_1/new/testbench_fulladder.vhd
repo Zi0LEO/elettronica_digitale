@@ -47,70 +47,52 @@ begin
     CUT: fulladder_1bit port map (Ia,Ib,Icin,Ocout,Osum);
     process
     begin
-        Ia <= '0';
-        Ib <= '0';
-        Icin <= '0';
+        --Test 1: A = 0, B = 0, carry_in = 0
+        Ia <= '0'; Ib <= '0'; Icin <= '0';
         wait for 10ns;
-
         assert (Osum  = '0' and Ocout = '0')
         report "Test 1 Fallito" severity error;
 
-        Ia <= '0';
-        Ib <= '0';
-        Icin <= '1';
+        --Test 2: A = 0, B = 0, carry_in = 1
+        Ia <= '0'; Ib <= '0'; Icin <= '1';
         wait for 10ns;
-
         assert (Osum  = '1' and Ocout = '0')
         report "Test 2 Fallito" severity error;
-
-        Ia <= '1';
-        Ib <= '0';
-        Icin <= '0';
+        
+        --Test 3: A = 1, B = 0, carry_in = 0
+        Ia <= '1'; Ib <= '0'; Icin <= '0';
         wait for 10ns;
-
         assert (Osum  = '1' and Ocout = '0')
         report "Test 3 Fallito" severity error;
 
-        Ia <= '1';
-        Ib <= '0';
-        Icin <= '1';
+        --Test 4: A = 1, B = 0, carry_in = 1
+        Ia <= '1'; Ib <= '0'; Icin <= '1';
         wait for 10ns;
-
         assert (Osum  = '0' and Ocout = '1')
         report "Test 4 Fallito" severity error;
 
-        Ia <= '0';
-        Ib <= '1';
-        Icin <= '0';
+        --Test 5: A = 0, B = 1, carry_in = 0
+        Ia <= '0'; Ib <= '1'; Icin <= '0';
         wait for 10ns;
-
         assert (Osum  = '1' and Ocout = '0')
         report "Test 5 Fallito" severity error;
 
-        Ia <= '0';
-        Ib <= '1';
-        Icin <= '1';
+        --Test 6: A = 0, B = 1, carry_in = 1
+        Ia <= '0'; Ib <= '1'; Icin <= '1';
         wait for 10ns;
-
         assert (Osum  = '0' and Ocout = '1')
         report "Test 6 Fallito" severity error;
-
-        Ia <= '1';
-        Ib <= '1';
-        Icin <= '0';
+        
+        --Test 7: A = 1, B = 1, carry_in = 0
+        Ia <= '1'; Ib <= '1'; Icin <= '0';
         wait for 10ns;
-
         assert (Osum  = '0' and Ocout = '1')
         report "Test 7 Fallito" severity error;
-
-        Ia <= '1';
-        Ib <= '1';
-        Icin <= '1';
+        
+        --Test 8: A = 1, B = 1, carry_in = 1 
+        Ia <= '1'; Ib <= '1'; Icin <= '1';
         wait for 10ns;
-
         assert (Osum  = '1' and Ocout = '1')
         report "Test 8 Fallito" severity error;
-
     end process;
-
 end Behavioral;

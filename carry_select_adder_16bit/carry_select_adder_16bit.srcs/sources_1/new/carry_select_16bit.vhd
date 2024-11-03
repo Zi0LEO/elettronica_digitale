@@ -21,7 +21,6 @@ entity carry_select_16bit is
 end carry_select_16bit;
 
 architecture Behavioral of carry_select_16bit is
-
     component ripplecarry_4bit is
         Port ( A_4 : in STD_LOGIC_VECTOR (3 downto 0);
              B_4 : in STD_LOGIC_VECTOR (3 downto 0);
@@ -36,7 +35,6 @@ architecture Behavioral of carry_select_16bit is
     signal sum_0, sum_1: STD_LOGIC_VECTOR(12 downto 0);
 
 begin
-
     ripplecarry0_0: ripplecarry_4bit PORT MAP (
             A_4 => A(3 downto 0),
             B_4 => B(3 downto 0),
@@ -114,6 +112,4 @@ begin
         end case;
         carry_out_final <= carry_selector;
     end process;
-
-
 end Behavioral;
