@@ -32,7 +32,7 @@ Il codice precedente ha generato in Vivado la schematica riportata in
 condizionale *when else*;
 
 <figure id="fig:logic_circuit_fulladder">
-<span class="image placeholder" data-original-image-src="./images/fulladder.png"
+<span class="image placeholder" data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/fulladder.png"
 data-original-image-title="" width="15cm"></span>
 <figcaption>Circuito Logico del Full Adder</figcaption>
 </figure>
@@ -51,7 +51,7 @@ simulazione:
 
 <figure id="fig:simulation_full adder">
 <span class="image placeholder"
-data-original-image-src="./images/fulladder_sim.png" data-original-image-title=""
+data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/fulladder_sim.png" data-original-image-title=""
 width="16cm"></span>
 <figcaption>Simulazione Full Adder</figcaption>
 </figure>
@@ -67,7 +67,7 @@ adder a 1 bit che lavorano insieme, il *carry_out* finale viene salvato.
 
 <figure id="fig:logic_circuit_ripplecarry">
 <span class="image placeholder"
-data-original-image-src="./images/ripplecarry.png" data-original-image-title=""
+data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/ripplecarry.png" data-original-image-title=""
 width="15cm"></span>
 <figcaption>Circuito Logico del Ripple Carry Adder</figcaption>
 </figure>
@@ -85,7 +85,7 @@ simulazione:
 
 <figure id="fig:simulation_ripple_carry">
 <span class="image placeholder"
-data-original-image-src="./images/ripple_carry_sim.png"
+data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/ripple_carry_sim.png"
 data-original-image-title="" width="16cm"></span>
 <figcaption>Simulazione Ripple Carry</figcaption>
 </figure>
@@ -115,7 +115,7 @@ dalle istruzioni condizionali.
 
 <figure id="fig:logic_circuit_carry_select_adder">
 <span class="image placeholder"
-data-original-image-src="./images/carry_select_schematics.png"
+data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/carry_select_schematics.png"
 data-original-image-title="" width="15cm"></span>
 <figcaption>Circuito Logico del Carry Select Adder</figcaption>
 </figure>
@@ -131,7 +131,7 @@ simulazione:
 
 <figure id="fig:simulation_carryselect">
 <span class="image placeholder"
-data-original-image-src="./images/carry_select_sim.png"
+data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/carry_select_sim.png"
 data-original-image-title="" width="16cm"></span>
 <figcaption>Simulazione Carry Select</figcaption>
 </figure>
