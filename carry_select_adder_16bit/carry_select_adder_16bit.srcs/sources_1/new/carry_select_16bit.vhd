@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------
--- Company:  Univerostà della Calabria
+-- Company:  Univerostï¿½ della Calabria
 -- Engineers: Frega Umberto, Napoli Leonardo
 -- 
 -- Create Date: 10/28/2024 04:37:15 PM
@@ -16,8 +16,7 @@ entity carry_select_16bit is
     Port ( A : in STD_LOGIC_VECTOR (15 downto 0);
          B : in STD_LOGIC_VECTOR (15 downto 0);
          carry_in_start: in STD_LOGIC;
-         sum : out STD_LOGIC_VECTOR (15 downto 0);
-         carry_out_final: out STD_LOGIC );
+         sum : out STD_LOGIC_VECTOR (16 downto 0));
 end carry_select_16bit;
 
 architecture Behavioral of carry_select_16bit is
@@ -110,6 +109,6 @@ begin
                 sum( 15 downto 12 ) <= sum_1(11 downto 8);
                 carry_selector := carry1(2);
         end case;
-        carry_out_final <= carry_selector;
+        sum(16) <= carry_selector;
     end process;
 end Behavioral;
