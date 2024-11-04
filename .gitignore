@@ -9,6 +9,8 @@
 #Exclude all
 *
 !*/
+#Don't ignore project images
+!*.png
 !.gitignore
 ###########################################################################
 ##	VIVADO
