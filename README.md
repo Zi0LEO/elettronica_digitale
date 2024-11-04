@@ -31,11 +31,7 @@ Il codice precedente ha generato in Vivado la schematica riportata in
 *Figure 1*. Da notare la creazione di RTL_MUX causata dal blocco
 condizionale *when else*;
 
-<figure id="fig:logic_circuit_fulladder">
-<span class="image placeholder" data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/fulladder.png"
-data-original-image-title="" width="15cm"></span>
-<figcaption>Circuito Logico del Full Adder</figcaption>
-</figure>
+![Circuito Logico del Full Adder](https://github.com/Zi0LEO/elettronica_digitale/images/fulladder.png)
 
 ### Testbench
 
@@ -49,12 +45,7 @@ e quindi eseguire dei test.
 Il risultato della testbench sopra indicata è illustrato nella seguente
 simulazione:
 
-<figure id="fig:simulation_full adder">
-<span class="image placeholder"
-data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/fulladder_sim.png" data-original-image-title=""
-width="16cm"></span>
-<figcaption>Simulazione Full Adder</figcaption>
-</figure>
+![Simulazione fulladder](https://github.com/Zi0LEO/elettronica_digitale/images/fulladder_sim.png)
 
 ## Ripple-Carry Adder a 4 bit
 
@@ -65,12 +56,7 @@ adder a 1 bit che lavorano insieme, il *carry_out* finale viene salvato.
 
 ### Schematica
 
-<figure id="fig:logic_circuit_ripplecarry">
-<span class="image placeholder"
-data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/ripplecarry.png" data-original-image-title=""
-width="15cm"></span>
-<figcaption>Circuito Logico del Ripple Carry Adder</figcaption>
-</figure>
+![Circuito Logico del Ripple Carry Adder](https://github.com/Zi0LEO/elettronica_digitale/images/ripplecarry.png)
 
 ### TestBench
 
@@ -83,12 +69,7 @@ implementati i test soltanto di alcune situazioi notevoli.
 Il risultato della testbench sopra indicata è illustrato nella seguente
 simulazione:
 
-<figure id="fig:simulation_ripple_carry">
-<span class="image placeholder"
-data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/ripple_carry_sim.png"
-data-original-image-title="" width="16cm"></span>
-<figcaption>Simulazione Ripple Carry</figcaption>
-</figure>
+![Simulazione ripple carry](https://github.com/Zi0LEO/elettronica_digitale/images/ripple_carry_sim.png)
 
 ## Carry-Select Adder
 
@@ -113,12 +94,7 @@ bit e 6 multiplexer. Degno di nota è che nel codice non è presente alcun
 multiplexer, questi vengono infatti generati automaticamente a partire
 dalle istruzioni condizionali.
 
-<figure id="fig:logic_circuit_carry_select_adder">
-<span class="image placeholder"
-data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/carry_select_schematics.png"
-data-original-image-title="" width="15cm"></span>
-<figcaption>Circuito Logico del Carry Select Adder</figcaption>
-</figure>
+![Circuito logico del Carry select adder](https://github.com/Zi0LEO/elettronica_digitale/images/carry_select_schematics.png)
 
 ### Testbench
 
@@ -129,9 +105,4 @@ Discorso analogo a quello del Ripple Carry Adder.
 Il risultato della testbench sopra indicata è illustrato nella seguente
 simulazione:
 
-<figure id="fig:simulation_carryselect">
-<span class="image placeholder"
-data-original-image-src="https://github.com/Zi0LEO/elettronica_digitale/images/carry_select_sim.png"
-data-original-image-title="" width="16cm"></span>
-<figcaption>Simulazione Carry Select</figcaption>
-</figure>
+![Simulazione Carry select adder](https://github.com/Zi0LEO/elettronica_digitale/images/carry_select_sim.png)
