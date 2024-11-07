@@ -1,4 +1,5 @@
 # Created by https://www.toptal.com/developers/gitignore/api/vivado
+
 # Edit at https://www.toptal.com/developers/gitignore?templates=vivado
 
 ### Vivado ###
@@ -69,5 +70,3 @@
 !*.elf
 !*.bmm
 !*.xmp
-
-# End of https://www.toptal.com/developers/gitignore/api/vivado
