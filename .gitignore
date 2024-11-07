@@ -70,3 +70,8 @@
 !*.elf
 !*.bmm
 !*.xmp
+
+#Do not ignore .tex
+!.tex
+!.bib
+
