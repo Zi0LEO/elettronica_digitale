@@ -1,8 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  \
-"../../../../carry_select_adder_16bit.srcs/sources_1/new/fulladder_1bit.vhd" \
-"../../../../carry_select_adder_16bit.srcs/sources_1/new/ripplecarry_4bit.vhd" \
-"../../../../carry_select_adder_16bit.srcs/sim_1/new/testbench_ripplecarry.vhd" \
-
-# Do not sort compile order
-nosort
