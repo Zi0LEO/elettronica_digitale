@@ -70,6 +70,6 @@
 !*.xmp
 
 #Do not ignore .tex
-!.tex
-!.bib
+!main.tex
+!main.pdf
 
