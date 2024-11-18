@@ -1,10 +1,11 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity generic_adder is
-    generic (n:INTEGER);
-    Port ( A : in STD_LOGIC_VECTOR (n-1 downto 0);
-           B : in STD_LOGIC_VECTOR (n-1 downto 0);
+    generic (n : INTEGER := 8);
+    Port ( A_adder : in STD_LOGIC_VECTOR (n-1 downto 0);
+           B_adder : in STD_LOGIC_VECTOR (n-1 downto 0);
            cin : in STD_LOGIC;
            sum : out STD_LOGIC_VECTOR (n downto 0));
 end generic_adder;
@@ -15,12 +16,12 @@ signal carry : STD_LOGIC_VECTOR (n+1 downto 0);
 begin
     p_g: for i in 0 to n generate
         p_gMSB: if (i=n) generate 
-           p(n) <= A(n-1) xor B(n-1);    
-           g(n) <= A(n-1) and B(n-1);
+           p(n) <= A_adder(n-1) xor B_adder(n-1);    
+           g(n) <= A_adder(n-1) and B_adder(n-1);
         end generate; 
         p_gLSB: if i<n generate
-            p(i) <= A(i) xor B(i);
-            g(i) <= A(i) and B(i);
+            p(i) <= A_adder(i) xor B_adder(i);
+            g(i) <= A_adder(i) and B_adder(i);
         end generate;
         carry(i+1) <= (g(i) or (p(i) and carry(i)));
         sum(i) <= carry(i) xor p(i);
