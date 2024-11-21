@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity mini_alu is
-  generic (n : INTEGER := 8);
+  generic (n : INTEGER);
     Port ( A,B : in STD_LOGIC_VECTOR (n-1 downto 0);
            C : in STD_LOGIC;
            output : out STD_LOGIC_VECTOR (n downto 0));

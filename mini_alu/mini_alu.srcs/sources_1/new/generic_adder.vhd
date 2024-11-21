@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity generic_adder is
-    generic (n : INTEGER := 8);
+    generic (n : INTEGER);
     Port ( A_adder,B_adder: in STD_LOGIC_VECTOR (n-1 downto 0);
          cin : in STD_LOGIC;
          sum : out STD_LOGIC_VECTOR (n downto 0));
