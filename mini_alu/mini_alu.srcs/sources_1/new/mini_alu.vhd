@@ -3,25 +3,24 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity mini_alu is
-  generic (n : INTEGER);
-    Port ( A,B : in STD_LOGIC_VECTOR (n-1 downto 0);
+  generic (bit_number : INTEGER);
+    Port ( A,B : in STD_LOGIC_VECTOR (bit_number-1 downto 0);
            C : in STD_LOGIC;
-           output : out STD_LOGIC_VECTOR (n downto 0));
+           output : out STD_LOGIC_VECTOR (bit_number downto 0));
 end mini_alu;
 
 architecture Behavioral of mini_alu is
   component generic_adder is
-    generic (n:INTEGER);
+    generic (bit_number:INTEGER);
       Port ( 
-        A_adder, B_adder : in STD_LOGIC_VECTOR (n-1 downto 0);
+        A_adder, B_adder : in STD_LOGIC_VECTOR (bit_number-1 downto 0);
         cin : in STD_LOGIC;
-        sum : out STD_LOGIC_VECTOR (n downto 0));
+        sum : out STD_LOGIC_VECTOR (bit_number downto 0));
   end component;
 
-signal B_internal: STD_LOGIC_VECTOR (n-1 downto 0);
+signal B_internal: STD_LOGIC_VECTOR (bit_number-1 downto 0);
 
 begin
-      
   process(A, B, C) begin
     case C is
       when '0' => 
@@ -33,10 +32,10 @@ begin
   end process;
 
 generic_adder_alu: generic_adder 
-      GENERIC MAP (n => n)
+      GENERIC MAP (bit_number => bit_number)
       PORT MAP (
       A_adder => A,
       B_adder => B_internal,
-      cin => '0',
+      cin => C,
       sum => output);
 end Behavioral;
