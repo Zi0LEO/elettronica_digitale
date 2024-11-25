@@ -8,7 +8,7 @@ end mini_alu_testbench;
 
 architecture Behavioral of mini_alu_testbench is
     component mini_alu is
-    generic (n : INTEGER := 4);
+    --generic (n : INTEGER := 4);
     Port ( A,B : in STD_LOGIC_VECTOR (n-1 downto 0);
            C : in STD_LOGIC;
            output : out STD_LOGIC_VECTOR (n downto 0));
