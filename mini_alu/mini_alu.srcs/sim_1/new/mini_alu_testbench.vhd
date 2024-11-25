@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.all;
 
 entity mini_alu_testbench is
     generic (n: integer := 4);
@@ -13,42 +14,26 @@ architecture Behavioral of mini_alu_testbench is
            output : out STD_LOGIC_VECTOR (n downto 0));
     end component;
     
+    constant min_value : integer := -(2**(n-1));
+    constant max_value : integer := (2**(n-1))-1;
+
     signal Ia,Ib: STD_LOGIC_VECTOR (n-1 downto 0);
     signal Ic: STD_LOGIC;
     signal Ooutput: STD_LOGIC_VECTOR(n downto 0);
 begin 
     CUT: mini_alu port map(Ia,Ib,Ic, Ooutput);
-    process begin
-        --Test 1: Addizione zeri
-        Ia <= (others => '0'); Ib <= (others => '0');
-        Ic <= '0';
-        wait for 10 ns;
-       
-        --Test 2: Sottrazione zeri
-        Ia <= (others => '0'); Ib <= (others => '0');
-        Ic <= '1';
-        wait for 10 ns;
-        
-        --Test 3: Addizione tra i valori massimi
-        Ia <= ('0', others => '1'); Ib <= ('0', others => '1');
-        Ic <= '0';
-        wait for 10 ns;
-        
-        --Test 4:Sottrazione tra i valori massimi
-        Ia <= ('0', others => '1'); Ib <= ('0', others => '1');
-        Ic <= '1';
-        wait for 10 ns;
-        
-        --Test 5: Addizione tra i valori minimi
-        Ia <= ('1', others => '0'); Ib <= ('1', others => '0');
-        Ic <= '0';
-        wait for 10 ns;
-
-        --Test 6: Sottrazione tra i valori minimi
-        Ia <= ('1', others => '0'); Ib <= ('1', others => '0');
-        Ic <= '1';
-        wait for 10 ns;
-        
+    process 
+    begin
+      external: for i in min_value to max_value loop
+          Ia <= (STD_LOGIC_VECTOR((TO_SIGNED(i,n))));
+          internal: for j in min_value to max_value loop
+            Ic <= '0';
+            Ib <= (STD_LOGIC_VECTOR((TO_SIGNED(j,n))));
+            wait for 10ns;
+            Ic <= '1';
+            wait for 10ns;
+         end loop internal;
+       end loop external;   
     end process;
 end Behavioral;
 
