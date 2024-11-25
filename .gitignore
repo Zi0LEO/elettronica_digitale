@@ -9,6 +9,7 @@
 #########
 #Exclude all
 *
+*.user_files/
 !*/
 #Don't ignore project images
 !*.png
