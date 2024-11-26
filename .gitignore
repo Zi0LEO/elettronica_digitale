@@ -11,6 +11,7 @@
 *
 !*/
 #Don't ignore project images
+!*.md
 !*.png
 !.gitignore
 ###########################################################################
@@ -70,6 +71,6 @@
 !*.xmp
 
 #Do not ignore .tex
-!main.tex
+!.tex
 !main.pdf
 
