@@ -1,0 +1,1 @@
+--incr --debug "typical" --relax --mt "8" -L "xil_defaultlib" -L "secureip" --snapshot "mini_alu_testbench_func_impl" "xil_defaultlib.mini_alu_testbench" -log "elaborate.log" 
