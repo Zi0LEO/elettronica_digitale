@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "/home/umberto/Documents/elettronica_digitale/mini_alu/mini_alu.runs/impl_1/mini_alu.tcl"
+  variable script "/home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.runs/impl_1/mini_alu.tcl"
   variable category "vivado_impl"
 }
 
@@ -115,8 +115,6 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 
 OPTRACE "impl_1" START { ROLLUP_1 }
 OPTRACE "Phase: Init Design" START { ROLLUP_AUTO }
@@ -124,15 +122,28 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param chipscope.maxJobs 4
-  set_param checkpoint.writeSynthRtdsInDcp 1
-  set_param synth.incrementalSynthesisCache ./.Xil/Vivado-5459-fedora/incrSyn
-  reset_param project.defaultXPMLibraries 
-  open_checkpoint /home/umberto/Documents/elettronica_digitale/mini_alu/mini_alu.runs/impl_1/mini_alu.dcp
-  set_property webtalk.parent_dir /home/umberto/Documents/elettronica_digitale/mini_alu/mini_alu.cache/wt [current_project]
-  set_property parent.project_path /home/umberto/Documents/elettronica_digitale/mini_alu/mini_alu.xpr [current_project]
-  set_property ip_output_repo /home/umberto/Documents/elettronica_digitale/mini_alu/mini_alu.cache/ip [current_project]
+  set_param chipscope.maxJobs 3
+OPTRACE "create in-memory project" START { }
+  create_project -in_memory -part xc7z020clg400-3
+  set_property design_mode GateLvl [current_fileset]
+  set_param project.singleFileAddWarning.threshold 0
+OPTRACE "create in-memory project" END { }
+OPTRACE "set parameters" START { }
+  set_property webtalk.parent_dir /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.cache/wt [current_project]
+  set_property parent.project_path /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.xpr [current_project]
+  set_property ip_output_repo /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
+OPTRACE "set parameters" END { }
+OPTRACE "add files" START { }
+  add_files -quiet /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.runs/synth_1/mini_alu.dcp
+OPTRACE "read constraints: implementation" START { }
+OPTRACE "read constraints: implementation" END { }
+OPTRACE "add files" END { }
+OPTRACE "link_design" START { }
+  link_design -top mini_alu -part xc7z020clg400-3 
+OPTRACE "link_design" END { }
+OPTRACE "gray box cells" START { }
+OPTRACE "gray box cells" END { }
 OPTRACE "init_design_reports" START { REPORT }
 OPTRACE "init_design_reports" END { }
 OPTRACE "init_design_write_hwdef" START { }

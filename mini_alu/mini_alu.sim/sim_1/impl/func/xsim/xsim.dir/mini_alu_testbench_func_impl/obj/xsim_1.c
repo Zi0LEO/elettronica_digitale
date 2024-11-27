@@ -54,28 +54,25 @@
 #endif
 typedef void (*funcp)(char *, char *);
 extern int main(int, char**);
-IKI_DLLESPEC extern void execute_98(char*, char *);
+IKI_DLLESPEC extern void execute_85(char*, char *);
 IKI_DLLESPEC extern void execute_17(char*, char *);
 IKI_DLLESPEC extern void execute_18(char*, char *);
 IKI_DLLESPEC extern void execute_48(char*, char *);
 IKI_DLLESPEC extern void execute_49(char*, char *);
 IKI_DLLESPEC extern void execute_51(char*, char *);
 IKI_DLLESPEC extern void execute_59(char*, char *);
-IKI_DLLESPEC extern void execute_66(char*, char *);
+IKI_DLLESPEC extern void execute_65(char*, char *);
 IKI_DLLESPEC extern void execute_72(char*, char *);
-IKI_DLLESPEC extern void execute_76(char*, char *);
+IKI_DLLESPEC extern void execute_79(char*, char *);
 IKI_DLLESPEC extern void execute_84(char*, char *);
-IKI_DLLESPEC extern void execute_89(char*, char *);
-IKI_DLLESPEC extern void execute_92(char*, char *);
-IKI_DLLESPEC extern void execute_97(char*, char *);
-funcp funcTab[14] = {(funcp)execute_98, (funcp)execute_17, (funcp)execute_18, (funcp)execute_48, (funcp)execute_49, (funcp)execute_51, (funcp)execute_59, (funcp)execute_66, (funcp)execute_72, (funcp)execute_76, (funcp)execute_84, (funcp)execute_89, (funcp)execute_92, (funcp)execute_97};
-const int NumRelocateId= 14;
+funcp funcTab[11] = {(funcp)execute_85, (funcp)execute_17, (funcp)execute_18, (funcp)execute_48, (funcp)execute_49, (funcp)execute_51, (funcp)execute_59, (funcp)execute_65, (funcp)execute_72, (funcp)execute_79, (funcp)execute_84};
+const int NumRelocateId= 11;
 
 void relocate(char *dp)
 {
-	iki_relocate(dp, "xsim.dir/mini_alu_testbench_func_impl/xsim.reloc",  (void **)funcTab, 14);
-	iki_vhdl_file_variable_register(dp + 10656);
-	iki_vhdl_file_variable_register(dp + 10712);
+	iki_relocate(dp, "xsim.dir/mini_alu_testbench_func_impl/xsim.reloc",  (void **)funcTab, 11);
+	iki_vhdl_file_variable_register(dp + 10144);
+	iki_vhdl_file_variable_register(dp + 10200);
 
 
 	/*Populate the transaction function pointer field in the whole net structure */
