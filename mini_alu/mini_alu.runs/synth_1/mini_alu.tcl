@@ -70,6 +70,7 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 3
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z020clg400-3
 
@@ -85,6 +86,7 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_vhdl -library xil_defaultlib {
+  /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.srcs/sources_1/new/support.vhd
   /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.srcs/sources_1/new/generic_adder.vhd
   /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.srcs/sources_1/new/mini_alu.vhd
 }
@@ -98,6 +100,8 @@ foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.srcs/utils_1/imports/synth_1/mini_alu.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

@@ -1,7 +1,7 @@
 // Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2022.1 (lin64) Build 3526262 Mon Apr 18 15:47:01 MDT 2022
-// Date        : Wed Nov 27 18:43:15 2024
+// Date        : Fri Nov 29 09:36:55 2024
 // Host        : Host-003 running 64-bit unknown
 // Command     : write_verilog -mode timesim -nolib -sdf_anno true -force -file
 //               /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.sim/sim_1/impl/timing/xsim/mini_alu_testbench_time_impl.v

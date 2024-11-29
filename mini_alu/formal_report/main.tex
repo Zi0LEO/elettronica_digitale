@@ -2,6 +2,7 @@
 \input{format}
 \input{commands}
 
+\usepackage{placeins}
 \usepackage{listings}
 \usepackage{xcolor}
 
@@ -59,14 +60,15 @@ il segno del secondo operando.
 La componente di base del sistema è un carry look-ahead adder, che genera quindi vari segnali generate e propagate a seconda del numero di bit degli operandi.
 Riportiamo di seguito il codice dell'adder con caso di default con 4 bit.
 
-\begin{problem}{Codice carry look-ahead adder}{problem-label}
+\begin{problem}{Codice adder}{problem-label}
 \begin{lstlisting}[language=VHDL]
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
+library work;
+use work.constants.all;
 
 entity generic_adder is
-    generic (bit_number : INTEGER := 4);
+    generic (bit_number : INTEGER := nbit);
     Port ( A_adder,B_adder: in STD_LOGIC_VECTOR (bit_number-1 downto 0);
          cin : in STD_LOGIC;
          sum : out STD_LOGIC_VECTOR (bit_number downto 0));
@@ -76,7 +78,7 @@ architecture Behavioral of generic_adder is
     signal p,g : STD_LOGIC_VECTOR (bit_number downto 0);
     signal carry : STD_LOGIC_VECTOR (bit_number+1 downto 0);
 begin
-    carry(0) <= cin
+    carry(0) <= cin;
     p_g: for i in 0 to bit_number generate
         p_gMSB: if (i=bit_number) generate
             p(i) <= A_adder(bit_number-1) xor B_adder(bit_number-1);
@@ -90,14 +92,13 @@ begin
         sum(i) <= carry(i) xor p(i);
     end generate;
 end Behavioral;
-
 \end{lstlisting}
 \end{problem}
 
 \subsection{Schematica}
 Il codice precedente con bit number 4, 8 e 16 ha generato in vivado le schematiche riportate rispettivamente in \textit{Figure 1}, \textit{Figure 2}, \textit{Figure 3}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \begin{minipage}{0.45\textwidth}
     \includegraphics[width=1\textwidth]{assets/schematics/generic_4bit.png}
@@ -123,9 +124,11 @@ Nell'adder poi, oltre ad A ed al valore calcolato di B, verrà introdotto il val
 \begin{lstlisting}[language=VHDL]
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+library work;
+use work.constants.all;
 
 entity mini_alu is
-  generic (bit_number : INTEGER := 4);
+  generic (bit_number : INTEGER := nbit);
     Port ( A,B : in STD_LOGIC_VECTOR (bit_number-1 downto 0);
            C : in STD_LOGIC;
            output : out STD_LOGIC_VECTOR (bit_number downto 0));
@@ -133,18 +136,17 @@ end mini_alu;
 
 architecture Behavioral of mini_alu is
   component generic_adder is
-    generic (bit_number:INTEGER := 4);
+    generic (bit_number:INTEGER := nbit);
       Port ( 
         A_adder, B_adder : in STD_LOGIC_VECTOR (bit_number-1 downto 0);
         cin : in STD_LOGIC;
-        sum : out STD_LOGIC_VECTOR (bit_number downto 0));
+       sum : out STD_LOGIC_VECTOR (bit_number downto 0));
   end component;
 
 signal B_internal: STD_LOGIC_VECTOR (bit_number-1 downto 0);
 signal carry_in: STD_LOGIC;
 
 begin
-      
   process(A, B, C) begin
     case C is
       when '0' => 
@@ -163,12 +165,12 @@ generic_adder_alu: generic_adder
       B_adder => B_internal,
       cin => C,
       sum => output);
-end Behavioral;
+end Behavioral
 \end{lstlisting}
 \end{problem}
 
 Possiamo trovare la schematica risultante nella \textit{Figure 4}
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=15cm]{assets/schematics/generic_alu.png}
     \caption{Circuito Logico del mini ALU}
@@ -182,34 +184,36 @@ I test sono stati svolti in tutti i casi possibili, dando un tempo di 10 ns per 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.all;
+library work;
+use work.constants.all;
 
 entity mini_alu_testbench is
-    generic (n: integer := 4);
+    generic (bit_number: integer := nbit);
 end mini_alu_testbench;
 
 architecture Behavioral of mini_alu_testbench is
     component mini_alu is
-    --generic (n : INTEGER := 4);
-    Port ( A,B : in STD_LOGIC_VECTOR (n-1 downto 0);
+    generic (bit_number : INTEGER := nbit);
+    Port ( A,B : in STD_LOGIC_VECTOR (bit_number-1 downto 0);
            C : in STD_LOGIC;
-           output : out STD_LOGIC_VECTOR (n downto 0));
+           output : out STD_LOGIC_VECTOR (bit_number downto 0));
     end component;
     
-    constant min_value : integer := -(2**(n-1));
-    constant max_value : integer := (2**(n-1))-1;
+    constant min_value : integer := -(2**(bit_number-1));
+    constant max_value : integer := (2**(bit_number-1))-1;
 
-    signal Ia,Ib: STD_LOGIC_VECTOR (n-1 downto 0);
+    signal Ia,Ib: STD_LOGIC_VECTOR (bit_number-1 downto 0);
     signal Ic: STD_LOGIC;
-    signal Ooutput: STD_LOGIC_VECTOR(n downto 0);
+    signal Ooutput: STD_LOGIC_VECTOR(bit_number downto 0);
 begin 
     CUT: mini_alu port map(Ia,Ib,Ic, Ooutput);
     process 
     begin
       external: for i in min_value to max_value loop
-          Ia <= (STD_LOGIC_VECTOR((TO_SIGNED(i,n))));
+          Ia <= (STD_LOGIC_VECTOR((TO_SIGNED(i,bit_number))));
           internal: for j in min_value to max_value loop
             Ic <= '0';
-            Ib <= (STD_LOGIC_VECTOR((TO_SIGNED(j,n))));
+            Ib <= (STD_LOGIC_VECTOR((TO_SIGNED(j,bit_number))));
             wait for 10ns;
             Ic <= '1';
             wait for 10ns;
@@ -222,16 +226,47 @@ end Behavioral;
 
 \subsection{Simulazione}
 Sono state effettuate simulazioni behavioural e post-implementation. Vediamole, evidenziandone le differenze.
-\subsection{Behavioural}
-\begin{figure}[h]
+\subsection{4 bit}
+Per prime analizziamo le simulazioni nel caso del circuito a 4 bit.
+Per semplicita verranno riportate solo le immagini di alcuni momenti salienti della simulazione \\
+\begin{figure}[ht]
       \centering
-      \includegraphics[width=1\textwidth]{assets/simulations/behavioural/16bit/end_first_ooutput_16bit_behav.png}
-      \caption{Fine del primo input behavioural}
-\end{figure}
-\begin{figure}[h]
-      \centering
-      \includegraphics[width=1\textwidth]{assets/simulations/behavioural/16bit/start_secont_ooutput_16_bit_behav.png}
-      \caption{Inizio del secondo input behavioural}
+      \includegraphics[width=1\textwidth]{assets/simulations/behavioural/4bit/4bit_behav.png}
+      \caption{Cambio di Ic}
+      \label{4bit_behav}
 \end{figure}
 
+Possiamo notare come la simulazione in \textit{Figure~\ref{4bit_behav}} restituisca i dati corretti senza nessun delay. Vediamo ora la stessa situazione in
+un'implementazione reale.
+\begin{figure}[ht]
+      \centering
+      \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/4bit/end_X.png}
+      \caption{Fine output non definito}
+      \label{4bit_pi_x}
+\end{figure}
+
+Degna di nota la prima differenza mostrata in \textit{Figure~\ref{4bit_pi_x}}, nonostante gli input vengano dati al tempo iniziale 0, sono necessari 3,738 ns affinche 
+il circuito produca il primo risultato utile.
+
+\begin{figure}[ht]
+      \centering
+      \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/4bit/C_change.png}
+      \caption{Cambio di C}
+      \label{4bit_pi_c}
+\end{figure}
+
+Ancora, affinchè il risultato del cambio di valore di C possa essere utilizzato sono necessari 3,948 ns, come si vede in \textit{Figure~\ref{4bit_pi_c}}
+
+\begin{figure}[ht]
+      \centering
+      \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/4bit/power.png}
+      \caption{Junction Temperature e Total Power}
+      \label{4bit_power}
+\end{figure}
+
+Da \textit{Figure~\ref{4bit_power}} notiamo che l'implementazione del circuito, sebbene non presenti un clock, non produce problemi significativi dal punto di vista della temperatura, grazie al basso numero di bit da calcolare.
+\FloatBarrier
+
+\subsection{8 bit}
+Analizziamo ora le simulazioni ottenute nel caso di circuito a 8 bit
 \end{document}

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2022.1 (lin64) Build 3526262 Mon Apr 18 15:47:01 MDT 2022
-| Date             : Wed Nov 27 15:40:15 2024
+| Date             : Fri Nov 29 10:03:43 2024
 | Host             : Host-003 running 64-bit unknown
 | Command          : report_power -file mini_alu_power_routed.rpt -pb mini_alu_power_summary_routed.pb -rpx mini_alu_power_routed.rpx
 | Design           : mini_alu
