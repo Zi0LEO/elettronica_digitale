@@ -113,7 +113,7 @@ Il codice precedente con bit number 4, 8 e 16 ha generato in vivado le schematic
     \caption{Adder a 16 bit}
   \end{minipage}
 \end{figure}
-\newpage
+\clearpage
 
 \section{Mini ALU}
 \subsection{Implementazione}
@@ -224,7 +224,7 @@ end Behavioral;
 \end{lstlisting}
 \end{problem}
 
-\newpage
+\clearpage
 \section{Simulazione}
 Sono state effettuate simulazioni behavioural e post-implementation. Vediamole, evidenziandone le differenze.
 
@@ -393,8 +393,87 @@ Nonostante questi incrementi, l'utilizzazione mostrata in figura \textit{Table~\
       \caption{Numero LUT utilizzati nel circuito a 4 bit}
       \label{lut_utilization_8bit}
 \end{table}
+
+\clearpage
+\subsection{16 Bit}
+Per la sezione finale andremo ad analizzare il comportamento della nostra mini alu inl caso in cui abbia 16 bit.
+
+\subsubsection{Behavioural}
+Riportiamo nella \textit{Figure~\ref{16bit_behav}} simulazione behavioural, per avere un modello di riferimento.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/simulations/behavioural/16bit/16bit_behav.png}
+  \caption{Simulazione ideale a 16 bit}
+  \label{16bit_behav}
+\end{figure}
 \FloatBarrier
 
-\subsection{16 Bit}
+\subsubsection{Post-implementation}
+Analizziamo adesso la simulazione post-implementation, ponendo ancora una volta la lente d'ingrandimento sui ritardi temporali rapportati alla simulazione ideale.
+Dalla \textit{Figure~\ref{16bit_pi_x}} risulta evidente che questa implementazione presenta dei problemi non indifferenti. A fronte dell'input iniziale dei classici 10 ns, ne saranno necessari 11,817 per
+produrre il primo risultato utile, portando ad uno sfasamento per cui il risultato di un input verrà mostrato soltanto quando l'input successivo sarà già stato ricevuto
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/16bit/end_x.png}
+  \caption{Primo valore utile}
+  \label{16bit_pi_x} 
+\end{figure}
+
+Prendendo un istante di tempo generico, nel nostro caso fissato a 11,911,821.768 ns, avremo come output -5757, risultato degli input somministrati all'istante 11,911,810.000 ns, \textit{Figure~\ref{random_val16}}.
+Da questo e da altri casi campionati possiamo affermare che il ritardo medio che si verifica consiste proprio nel valore iniziale osservato di 11,8 ns.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/16bit/random_val.png}
+  \caption{Dimostrazione ritardo di 11,8 ns}
+  \label{random_val16} 
+\end{figure}
+
+La temperatura del circuito raggiunge una quota insostenibile, a fronte di una potenza di 14,276 w. La temperatura di giunzione mostrata in \textit{Figure~\ref{16bit_power}} non può considerarsi 
+accurata in quanto Vivado la possiede un limite massimo a 125 gradi Celsius, che verrebbero quindi ampiamente superati.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/16bit/power.png}
+  \caption{Total On-Chip Power e Junction Temperature}
+  \label{16bit_power} 
+\end{figure}
+\FloatBarrier
+
+\subsubsection{LUT Tables}
+Le tables utilizzate nel circuito continuano ad aumentare con l'aumentare del numero di bit, come dimostra la \textit{Table~\ref{lut_quantity_16bit}}. Riportiamo anche la schematica reale in \textit{Figure~\ref{lut_schematic_16bit}}
+\begin{table}[ht]
+      \centering
+      \begin{tabular}{|c|c|c|}
+        \hline
+        Nome & Utilizzate & Tipo di utilizzo \\ \hline
+        IBUF & 33 & IO \\ \hline
+        LUT6 & 21 & LUT \\ \hline
+        OBUF & 17 & IO \\ \hline
+        LUT5 & 9 & LUT \\ \hline
+        LUT4 & 4 & LUT \\ \hline
+        LUT2 & 2 & LUT \\ \hline 
+      \end{tabular}
+      \caption{Numero LUT utilizzati nel circuito a 16 bit}
+      \label{lut_quantity_16bit}
+\end{table}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/LUT/16bit/LUT_schematic_16bit.png}
+  \caption{Schematica circuito reale}
+  \label{lut_schematic_16bit}
+\end{figure}
+
+L'utilizzazione è invece riportata in \textit{Table~\ref{lut_utilization_16bit}}
+\begin{table}[ht]
+      \centering
+      \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Site Type & Used & Fixed & Prohibited & Available & Util\% \\ \hline
+        Slice LUTs & 32 & 0 & 0 & 53200 & $0.06$ \\ \hline
+         LUT as Logic & 32 & 0 & 0 & 53200 & $0.06$ \\ \hline 
+         LUT as Memory  & 0 & 0 & 0 & 17400 & $0.00$ \\ \hline
+      \end{tabular}
+      \caption{Numero LUT utilizzati nel circuito a 4 bit}
+      \label{lut_utilization_16bit}
+\end{table}
 
 \end{document}
