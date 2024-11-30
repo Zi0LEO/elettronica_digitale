@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2022.1 (lin64) Build 3526262 Mon Apr 18 15:47:01 MDT 2022
-| Date             : Fri Nov 29 10:03:43 2024
+| Date             : Sat Nov 30 19:29:14 2024
 | Host             : Host-003 running 64-bit unknown
 | Command          : report_power -file mini_alu_power_routed.rpt -pb mini_alu_power_summary_routed.pb -rpx mini_alu_power_routed.rpx
 | Design           : mini_alu
@@ -29,20 +29,20 @@ Table of Contents
 1. Summary
 ----------
 
-+--------------------------+--------------+
-| Total On-Chip Power (W)  | 3.159        |
-| Design Power Budget (W)  | Unspecified* |
-| Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 2.972        |
-| Device Static (W)        | 0.187        |
-| Effective TJA (C/W)      | 11.5         |
-| Max Ambient (C)          | 63.6         |
-| Junction Temperature (C) | 61.4         |
-| Confidence Level         | Low          |
-| Setting File             | ---          |
-| Simulation Activity File | ---          |
-| Design Nets Matched      | NA           |
-+--------------------------+--------------+
++--------------------------+----------------------------------+
+| Total On-Chip Power (W)  | 14.276 (Junction temp exceeded!) |
+| Design Power Budget (W)  | Unspecified*                     |
+| Power Budget Margin (W)  | NA                               |
+| Dynamic (W)              | 13.237                           |
+| Device Static (W)        | 1.039                            |
+| Effective TJA (C/W)      | 11.5                             |
+| Max Ambient (C)          | 0.0                              |
+| Junction Temperature (C) | 125.0                            |
+| Confidence Level         | Low                              |
+| Setting File             | ---                              |
+| Simulation Activity File | ---                              |
+| Design Nets Matched      | NA                               |
++--------------------------+----------------------------------+
 * Specify Design Power Budget using, set_operating_conditions -design_power_budget <value in Watts>
 
 
@@ -52,12 +52,12 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Slice Logic    |     0.026 |        6 |       --- |             --- |
-|   LUT as Logic |     0.026 |        5 |     53200 |           <0.01 |
-| Signals        |     0.083 |       15 |       --- |             --- |
-| I/O            |     2.863 |       14 |       125 |           11.20 |
-| Static Power   |     0.187 |          |           |                 |
-| Total          |     3.159 |          |           |                 |
+| Slice Logic    |     0.221 |       42 |       --- |             --- |
+|   LUT as Logic |     0.221 |       32 |     53200 |            0.06 |
+| Signals        |     1.585 |       75 |       --- |             --- |
+| I/O            |    11.430 |       50 |       125 |           40.00 |
+| Static Power   |     1.039 |          |           |                 |
+| Total          |    14.276 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -67,20 +67,20 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.175 |       0.145 |      0.030 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.254 |       0.231 |      0.022 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     2.237 |       1.938 |      0.299 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     1.025 |       0.925 |      0.100 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vcco18    |       1.800 |     1.340 |       1.339 |      0.001 |       NA    | Unspecified | NA         |
+| Vcco18    |       1.800 |     5.353 |       5.352 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccbram   |       1.000 |     0.002 |       0.000 |      0.002 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.026 |       0.000 |      0.026 |       NA    | Unspecified | NA         |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTVccaux |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccpint   |       1.000 |     0.054 |       0.000 |      0.054 |       NA    | Unspecified | NA         |
+| Vccpint   |       1.000 |     0.473 |       0.000 |      0.473 |       NA    | Unspecified | NA         |
 | Vccpaux   |       1.800 |     0.010 |       0.000 |      0.010 |       NA    | Unspecified | NA         |
 | Vccpll    |       1.800 |     0.003 |       0.000 |      0.003 |       NA    | Unspecified | NA         |
 | Vcco_ddr  |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -141,7 +141,7 @@ Table of Contents
 +----------+-----------+
 | Name     | Power (W) |
 +----------+-----------+
-| mini_alu |     2.972 |
+| mini_alu |    13.237 |
 +----------+-----------+
 
 

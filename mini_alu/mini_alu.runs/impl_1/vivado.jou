@@ -2,12 +2,12 @@
 # Vivado v2022.1 (64-bit)
 # SW Build 3526262 on Mon Apr 18 15:47:01 MDT 2022
 # IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
-# Start of session at: Fri Nov 29 10:02:57 2024
-# Process ID: 127644
+# Start of session at: Sat Nov 30 19:28:26 2024
+# Process ID: 142220
 # Current directory: /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.runs/impl_1
 # Command line: vivado -log mini_alu.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source mini_alu.tcl -notrace
 # Log file: /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.runs/impl_1/mini_alu.vdi
 # Journal file: /home/thecoder/projects/elettronica_digitale/mini_alu/mini_alu.runs/impl_1/vivado.jou
-# Running On: Host-003, OS: Linux, CPU Frequency: 1113.000 MHz, CPU Physical cores: 12, Host memory: 7662 MB
+# Running On: Host-003, OS: Linux, CPU Frequency: 2068.959 MHz, CPU Physical cores: 12, Host memory: 7662 MB
 #-----------------------------------------------------------
 source mini_alu.tcl -notrace
