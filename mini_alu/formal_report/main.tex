@@ -237,7 +237,7 @@ Per semplicita verranno riportate solo le immagini di alcuni momenti salienti de
       \includegraphics[width=1\textwidth]{assets/simulations/behavioural/4bit/4bit_behav.png}
       \caption{Cambio di Ic}
       \label{4bit_behav}
-\end{figure}u
+\end{figure}
 
 Possiamo notare come la simulazione in \textit{Figure~\ref{4bit_behav}} restituisca i dati corretti senza nessun delay. Vediamo ora la stessa situazione in
 un'implementazione reale.
@@ -315,5 +315,86 @@ Riportiamo per completezza in \textit{Table~\ref{lut_utilization_4bit}} anche l'
 \FloatBarrier
 
 \subsection{8 bit}
-Analizziamo ora le simulazioni ottenute nel caso di circuito a 8 bit
+Analizziamo ora le simulazioni ottenute nel caso di circuito a 8 bit. 
+\subsubsection{Behavioural}
+La \textit{Figure~\ref{8bit_behav}} illustra la simulazione behavioural, quindi ideale.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/simulations/behavioural/8bit/8bit_behav_sim.png}
+  \caption{Simulazione 8 bit}
+  \label{8bit_behav} 
+\end{figure}
+
+\subsubsection{Post-implementation}
+Passando alla simulazione post-implementation, notiamo che il ritardo inizia a diventare piuttosto importante. Dalla \textit{Figure~\ref{8bit_pi_x}} vediamo infatti che per avere il primo valore utile saranno necessari 
+ben 7,5 ns sui 10 totali concessi.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/8bit/end_x.png}
+  \caption{Primo valore utile}
+  \label{8bit_pi_x} 
+\end{figure}
+
+Negli istanti successivi il valore del ritardo tende ad assestarsi su una media di circa 7 ns dalla ricezione degli input all'invio dell'output corretto, come visibile dall'esempio generico della \textit{Figure~\ref{random_val}}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/8bit/random_val.png}
+  \caption{Dimostrazione ritardo di 6,98 ns}
+  \label{random_val} 
+\end{figure}
+
+Dal punto di vista della temperatura il circuito ad 8 bit inizia a risentire della mancanza di un clock. La \textit{Figure~\ref{8bit_power}} infatti mostra una temperatura massima raggiunta di oltre
+100 gradi, che rischia di compromettere la stabilità ed il funzionamento di un circuito reale.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/8bit/power.png}
+  \caption{Total On-Chip Power e Junction Temperature}
+  \label{8bit_power} 
+\end{figure}
+\FloatBarrier
+
+\subsubsection{LUT Tables}
+Le tables utilizzate nel circuito a 8 bit sono maggiori di quelle del circuito a 4 bit, come vediamo dalle quantità mostrate in \textit{Table~\ref{lut_quantity_8bit}} e dalla loro disposizione,
+evidenziata in \textit{Figure~\ref{lut_schematic_8bit}}
+\begin{table}[ht]
+      \centering
+      \begin{tabular}{|c|c|c|}
+        \hline
+        Nome & Utilizzate & Tipo di utilizzo \\ \hline
+        IBUF & 17 & IO \\ \hline
+        OBUF & 9 & IO \\ \hline
+        LUT6 & 6 & LUT \\ \hline
+        LUT5 & 3 & LUT \\ \hline
+        LUT4 & 2 & LUT \\ \hline
+        LUT2 & 1 & LUT \\ \hline 
+      \end{tabular}
+      \caption{Numero LUT utilizzati nel circuito a 8 bit}
+      \label{lut_quantity_8bit}
+\end{table}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/LUT/8bit/LUT_schematic_8bit.png}
+  \caption{Schematica circuito reale}
+  \label{lut_schematic_8bit}
+\end{figure}
+
+Nonostante questi incrementi, l'utilizzazione mostrata in figura \textit{Table~\ref{lut_utilization_8bit}} rimane minima.
+
+\begin{table}[ht]
+      \centering
+      \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Site Type & Used & Fixed & Prohibited & Available & Util\% \\ \hline
+        Slice LUTs & 11 & 0 & 0 & 53200 & $0.02$ \\ \hline
+         LUT as Logic & 11 & 0 & 0 & 53200 & $0.02$ \\ \hline 
+         LUT as Memory  & 0 & 0 & 0 & 17400 & $0.00$ \\ \hline
+      \end{tabular}
+      \caption{Numero LUT utilizzati nel circuito a 4 bit}
+      \label{lut_utilization_8bit}
+\end{table}
+\FloatBarrier
+
+\subsection{16 Bit}
+
 \end{document}
