@@ -224,20 +224,25 @@ end Behavioral;
 \end{lstlisting}
 \end{problem}
 
-\subsection{Simulazione}
+\newpage
+\section{Simulazione}
 Sono state effettuate simulazioni behavioural e post-implementation. Vediamole, evidenziandone le differenze.
+
 \subsection{4 bit}
 Per prime analizziamo le simulazioni nel caso del circuito a 4 bit.
-Per semplicita verranno riportate solo le immagini di alcuni momenti salienti della simulazione \\
+Per semplicita verranno riportate solo le immagini di alcuni momenti salienti della simulazione
+\subsubsection{Behavioural}
 \begin{figure}[ht]
       \centering
       \includegraphics[width=1\textwidth]{assets/simulations/behavioural/4bit/4bit_behav.png}
       \caption{Cambio di Ic}
       \label{4bit_behav}
-\end{figure}
+\end{figure}u
 
 Possiamo notare come la simulazione in \textit{Figure~\ref{4bit_behav}} restituisca i dati corretti senza nessun delay. Vediamo ora la stessa situazione in
 un'implementazione reale.
+
+\subsubsection{Post-implementation}
 \begin{figure}[ht]
       \centering
       \includegraphics[width=1\textwidth]{assets/simulations/Post_Implementation/4bit/end_X.png}
@@ -265,6 +270,48 @@ Ancora, affinchè il risultato del cambio di valore di C possa essere utilizzato
 \end{figure}
 
 Da \textit{Figure~\ref{4bit_power}} notiamo che l'implementazione del circuito, sebbene non presenti un clock, non produce problemi significativi dal punto di vista della temperatura, grazie al basso numero di bit da calcolare.
+\FloatBarrier
+
+\subsubsection{LUT Tables}
+
+Dalla sintesi del circuito ci vengono restituite inoltre le LUT Tables con i relativi valori di utilizzo. Il loro numero è riportato in \textit{Table~\ref{lut_quantity_4bit}}, mentre in \textit{Figure~\ref{lut_schematic_4bit}}
+troviamo la schematica del circuito reale.
+
+\begin{table}[ht]
+      \centering
+      \begin{tabular}{|c|c|c|}
+        \hline
+        Nome & Utilizzate & Tipo di utilizzo \\ \hline
+        IBUF & 9 & IO \\ \hline
+        OBUF & 5 & IO \\ \hline
+        LUT6 & 2 & LUT \\ \hline
+        LUT5 & 2 & LUT \\ \hline
+        LUT4 & 1 & LUT \\ \hline
+        LUT2 & 1 & LUT \\ \hline 
+      \end{tabular}
+      \caption{Numero LUT utilizzati nel circuito a 4 bit}
+      \label{lut_quantity_4bit}
+\end{table}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/LUT/4bit/LUT_schematic_4bit.png}
+  \caption{Schematica circuito reale}
+  \label{lut_schematic_4bit} 
+\end{figure}
+
+Riportiamo per completezza in \textit{Table~\ref{lut_utilization_4bit}} anche l'utilizzazione delle LUT, estremamente bassa a causa della semplicità del circuito
+\begin{table}[ht]
+      \centering
+      \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Site Type & Used & Fixed & Prohibited & Available & Util\% \\ \hline
+        Slice LUTs & 5 & 0 & 0 & 53200 & $<0.01$ \\ \hline
+         LUT as Logic & 5 & 0 & 0 & 53200 & $<0.01$ \\ \hline 
+         LUT as Memory  & 0 & 0 & 0 & 17400 & $0.00$ \\ \hline
+      \end{tabular}
+      \caption{Numero LUT utilizzati nel circuito a 4 bit}
+      \label{lut_utilization_4bit}
+\end{table}
 \FloatBarrier
 
 \subsection{8 bit}
