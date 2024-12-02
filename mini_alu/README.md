@@ -1,16 +1,6 @@
-::: Large
 [**Mini ALU**]{.sans-serif}\
-:::
 
 **Relazione di progetto**
-
-[**Studenti:**]{.sans-serif}\
-,
-[`frgmrt04a05l353d@studenti.unical.it`](frgmrt04a05l353d@studenti.unical.it);\
-,
-[`npllrd02s30d086@studenti.unical.it`](npllrd02s30d086@studenti.unical.it);
-
-[`Codice Sorgente`](https://github.com/Zi0LEO/elettronica_digitale)
 
 Il progetto assegnato consiste nel progettare ed implementare una mini
 alu, capace di fare addizioni e sottrazioni, tramite linguaggio VHDL.
@@ -144,7 +134,7 @@ generic_adder_alu: generic_adder
       sum => output);
 end Behavioral
 ```
-:::
+
 
 Possiamo trovare la schematica risultante nella *Figure 4*
 
@@ -202,7 +192,6 @@ begin
     end process;
 end Behavioral;
 ```
-:::
 
 # Simulazione
 
@@ -217,9 +206,7 @@ salienti della simulazione
 
 ### Behavioural
 
-![Cambio di
-Ic](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/behavioural/4bit/4bit_behav.png){#4bit_behav
-width="100%"}
+![Cambio di Ic](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/behavioural/4bit/4bit_behav.png)
 
 Possiamo notare come la simulazione in
 *Figure [1](#4bit_behav){reference-type="ref" reference="4bit_behav"}*
@@ -228,26 +215,21 @@ situazione in un'implementazione reale.
 
 ### Post-implementation
 
-![Fine output non
-definito](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/end_X.png){#4bit_pi_x
-width="100%"}
+![Fine output non definito](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/end_X.png)
+
 
 Degna di nota la prima differenza mostrata in
 *Figure [2](#4bit_pi_x){reference-type="ref" reference="4bit_pi_x"}*,
 nonostante gli input vengano dati al tempo iniziale 0, sono necessari
 3,738 ns affinche il circuito produca il primo risultato utile.
 
-![Cambio di
-C](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/C_change.png){#4bit_pi_c
-width="100%"}
+![Cambio di C](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/C_change.png)
 
 Ancora, affinchè il risultato del cambio di valore di C possa essere
 utilizzato sono necessari 3,948 ns, come si vede in
 *Figure [3](#4bit_pi_c){reference-type="ref" reference="4bit_pi_c"}*
 
-![Junction Temperature e Total
-Power](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/power.png){#4bit_power
-width="100%"}
+![Junction Temperature e Total Power](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/power.png)
 
 Da *Figure [4](#4bit_power){reference-type="ref"
 reference="4bit_power"}* notiamo che l'implementazione del circuito,
@@ -265,7 +247,6 @@ reference="lut_quantity_4bit"}*, mentre in
 reference="lut_schematic_4bit"}* troviamo la schematica del circuito
 reale.
 
-::: {#lut_quantity_4bit}
    Nome   Utilizzate   Tipo di utilizzo
   ------ ------------ ------------------
    IBUF       9               IO
@@ -275,12 +256,8 @@ reale.
    LUT4       1              LUT
    LUT2       1              LUT
 
-  : Numero LUT utilizzati nel circuito a 4 bit
-:::
 
-![Schematica circuito
-reale](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/LUT/4bit/LUT_schematic_4bit.png){#lut_schematic_4bit
-width="100%"}
+![Schematica circuito reale](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/LUT/4bit/LUT_schematic_4bit.png)
 
 Riportiamo per completezza in
 *Table [2](#lut_utilization_4bit){reference-type="ref"
