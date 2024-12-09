@@ -10,6 +10,9 @@
 #Exclude all
 *
 !*/
+*/*
+!*/*.srcs
+!*/report/
 #Don't ignore project images
 !*.md
 !*.png
