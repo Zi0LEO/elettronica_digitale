@@ -1,4 +1,4 @@
-[**Mini ALU**]{.sans-serif}\
+# Mini Alu
 
 **Relazione di progetto**
 
@@ -24,43 +24,6 @@ genera quindi vari segnali generate e propagate a seconda del numero di
 bit degli operandi. Riportiamo di seguito il codice dell'adder con caso
 di default con 4 bit.
 
-::: problem
-Codice adderproblem-label
-
-``` {.vhdl language="VHDL"}
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-library work;
-use work.constants.all;
-
-entity generic_adder is
-    generic (bit_number : INTEGER := nbit);
-    Port ( A_adder,B_adder: in STD_LOGIC_VECTOR (bit_number-1 downto 0);
-         cin : in STD_LOGIC;
-         sum : out STD_LOGIC_VECTOR (bit_number downto 0));
-end generic_adder;
-
-architecture Behavioral of generic_adder is
-    signal p,g : STD_LOGIC_VECTOR (bit_number downto 0);
-    signal carry : STD_LOGIC_VECTOR (bit_number+1 downto 0);
-begin
-    carry(0) <= cin;
-    p_g: for i in 0 to bit_number generate
-        p_gMSB: if (i=bit_number) generate
-            p(i) <= A_adder(bit_number-1) xor B_adder(bit_number-1);
-            g(i) <= A_adder(bit_number-1) and B_adder(bit_number-1);
-        end generate;
-        p_gLSB: if i<bit_number generate
-            p(i) <= A_adder(i) xor B_adder(i);
-            g(i) <= A_adder(i) and B_adder(i);
-        end generate;
-        carry(i+1) <= (g(i) or (p(i) and carry(i)));
-        sum(i) <= carry(i) xor p(i);
-    end generate;
-end Behavioral;
-```
-:::
-
 ## Schematica
 
 Il codice precedente con bit number 4, 8 e 16 ha generato in vivado le
@@ -68,10 +31,9 @@ schematiche riportate rispettivamente in *Figure 1*, *Figure 2*, *Figure
 3*.
 
 <figure>
-<img src="https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/schematics/generic_4bit.png" style="width:100.0%" />
-<img src="https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/schematics/generic_8bit.png" style="width:100.0%" />
-<img src="https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/schematics/generic_16bit.png" style="width:100.0%" />
-<figcaption>Adder a 16 bit</figcaption>
+<img src="https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/schematics/generic_4bit.png" style="width:100.0%" />
+<img src="https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/schematics/generic_8bit.png" style="width:100.0%" />
+<img src="https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/schematics/generic_16bit.png" style="width:100.0%" />
 </figure>
 
 # Mini ALU
@@ -85,113 +47,16 @@ ed al valore calcolato di B, verrà introdotto il valore di C stesso,
 completando il complemento a 2 in caso di necessità, non apportando
 cambiamenti altrimenti.
 
-::: problem
-Codice Mini ALU
-
-``` {.vhdl language="VHDL"}
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-library work;
-use work.constants.all;
-
-entity mini_alu is
-  generic (bit_number : INTEGER := nbit);
-    Port ( A,B : in STD_LOGIC_VECTOR (bit_number-1 downto 0);
-           C : in STD_LOGIC;
-           output : out STD_LOGIC_VECTOR (bit_number downto 0));
-end mini_alu;
-
-architecture Behavioral of mini_alu is
-  component generic_adder is
-    generic (bit_number:INTEGER := nbit);
-      Port ( 
-        A_adder, B_adder : in STD_LOGIC_VECTOR (bit_number-1 downto 0);
-        cin : in STD_LOGIC;
-       sum : out STD_LOGIC_VECTOR (bit_number downto 0));
-  end component;
-
-signal B_internal: STD_LOGIC_VECTOR (bit_number-1 downto 0);
-signal carry_in: STD_LOGIC;
-
-begin
-  process(A, B, C) begin
-    case C is
-      when '0' => 
-      B_internal <= B;
-            
-      when others =>
-      B_internal <= STD_LOGIC_VECTOR(not B);
-
-    end case;
-  end process;
-
-generic_adder_alu: generic_adder 
-      GENERIC MAP (bit_number => bit_number)
-      PORT MAP (
-      A_adder => A,
-      B_adder => B_internal,
-      cin => C,
-      sum => output);
-end Behavioral
-```
-
-
-Possiamo trovare la schematica risultante nella *Figure 4*
+Possiamo trovare la schematica risultante nella seguene immagine:
 
 ![Circuito Logico del mini
-ALU](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/schematics/generic_alu.png){width="15cm"}
+ALU](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/schematics/generic_alu.png)
 
 ## TestBench
 
 I test sono stati svolti in tutti i casi possibili, dando un tempo di 10
 ns per ogni caso, con un tempo totale in nanosecondi:
 $$2^{2n+1} \times 10$$
-
-::: problem
-Codice test
-
-``` {.vhdl language="VHDL"}
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.all;
-library work;
-use work.constants.all;
-
-entity mini_alu_testbench is
-    generic (bit_number: integer := nbit);
-end mini_alu_testbench;
-
-architecture Behavioral of mini_alu_testbench is
-    component mini_alu is
-    generic (bit_number : INTEGER := nbit);
-    Port ( A,B : in STD_LOGIC_VECTOR (bit_number-1 downto 0);
-           C : in STD_LOGIC;
-           output : out STD_LOGIC_VECTOR (bit_number downto 0));
-    end component;
-    
-    constant min_value : integer := -(2**(bit_number-1));
-    constant max_value : integer := (2**(bit_number-1))-1;
-
-    signal Ia,Ib: STD_LOGIC_VECTOR (bit_number-1 downto 0);
-    signal Ic: STD_LOGIC;
-    signal Ooutput: STD_LOGIC_VECTOR(bit_number downto 0);
-begin 
-    CUT: mini_alu port map(Ia,Ib,Ic, Ooutput);
-    process 
-    begin
-      external: for i in min_value to max_value loop
-          Ia <= (STD_LOGIC_VECTOR((TO_SIGNED(i,bit_number))));
-          internal: for j in min_value to max_value loop
-            Ic <= '0';
-            Ib <= (STD_LOGIC_VECTOR((TO_SIGNED(j,bit_number))));
-            wait for 10ns;
-            Ic <= '1';
-            wait for 10ns;
-         end loop internal;
-       end loop external;   
-    end process;
-end Behavioral;
-```
 
 # Simulazione
 
@@ -206,7 +71,7 @@ salienti della simulazione
 
 ### Behavioural
 
-![Cambio di Ic](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/behavioural/4bit/4bit_behav.png)
+![Cambio di Ic](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/behavioural/4bit/4bit_behav.png)
 
 Possiamo notare come la simulazione in
 *Figure [1](#4bit_behav){reference-type="ref" reference="4bit_behav"}*
@@ -215,7 +80,7 @@ situazione in un'implementazione reale.
 
 ### Post-implementation
 
-![Fine output non definito](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/end_X.png)
+![Fine output non definito](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/4bit/end_X.png)
 
 
 Degna di nota la prima differenza mostrata in
@@ -223,13 +88,13 @@ Degna di nota la prima differenza mostrata in
 nonostante gli input vengano dati al tempo iniziale 0, sono necessari
 3,738 ns affinche il circuito produca il primo risultato utile.
 
-![Cambio di C](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/C_change.png)
+![Cambio di C](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/4bit/C_change.png)
 
 Ancora, affinchè il risultato del cambio di valore di C possa essere
 utilizzato sono necessari 3,948 ns, come si vede in
 *Figure [3](#4bit_pi_c){reference-type="ref" reference="4bit_pi_c"}*
 
-![Junction Temperature e Total Power](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/4bit/power.png)
+![Junction Temperature e Total Power](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/4bit/power.png)
 
 Da *Figure [4](#4bit_power){reference-type="ref"
 reference="4bit_power"}* notiamo che l'implementazione del circuito,
@@ -257,7 +122,7 @@ reale.
    LUT2       1              LUT
 
 
-![Schematica circuito reale](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/LUT/4bit/LUT_schematic_4bit.png)
+![Schematica circuito reale](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/LUT/4bit/LUT_schematic_4bit.png)
 
 Riportiamo per completezza in
 *Table [2](#lut_utilization_4bit){reference-type="ref"
@@ -285,7 +150,7 @@ reference="8bit_behav"}* illustra la simulazione behavioural, quindi
 ideale.
 
 ![Simulazione 8
-bit](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/behavioural/8bit/8bit_behav_sim.png){#8bit_behav
+bit](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/behavioural/8bit/8bit_behav_sim.png){#8bit_behav
 width="100%"}
 
 ### Post-implementation
@@ -297,7 +162,7 @@ vediamo infatti che per avere il primo valore utile saranno necessari
 ben 7,5 ns sui 10 totali concessi.
 
 ![Primo valore
-utile](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/8bit/end_x.png){#8bit_pi_x
+utile](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/8bit/end_x.png){#8bit_pi_x
 width="100%"}
 
 Negli istanti successivi il valore del ritardo tende ad assestarsi su
@@ -306,7 +171,7 @@ dell'output corretto, come visibile dall'esempio generico della
 *Figure [8](#random_val){reference-type="ref" reference="random_val"}*
 
 ![Dimostrazione ritardo di 6,98
-ns](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/8bit/random_val.png){#random_val
+ns](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/8bit/random_val.png){#random_val
 width="100%"}
 
 Dal punto di vista della temperatura il circuito ad 8 bit inizia a
@@ -317,7 +182,7 @@ rischia di compromettere la stabilità ed il funzionamento di un circuito
 reale.
 
 ![Total On-Chip Power e Junction
-Temperature](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/8bit/power.png){#8bit_power
+Temperature](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/8bit/power.png){#8bit_power
 width="100%"}
 
 ### LUT Tables
@@ -343,7 +208,7 @@ reference="lut_schematic_8bit"}*
 :::
 
 ![Schematica circuito
-reale](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/LUT/8bit/LUT_schematic_8bit.png){#lut_schematic_8bit
+reale](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/LUT/8bit/LUT_schematic_8bit.png){#lut_schematic_8bit
 width="100%"}
 
 Nonostante questi incrementi, l'utilizzazione mostrata in figura
@@ -372,7 +237,7 @@ reference="16bit_behav"}* simulazione behavioural, per avere un modello
 di riferimento.
 
 ![Simulazione ideale a 16
-bit](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/behavioural/16bit/16bit_behav.png){#16bit_behav
+bit](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/behavioural/16bit/16bit_behav.png){#16bit_behav
 width="100%"}
 
 ### Post-implementation
@@ -388,7 +253,7 @@ input verrà mostrato soltanto quando l'input successivo sarà già stato
 ricevuto
 
 ![Primo valore
-utile](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/16bit/end_x.png){#16bit_pi_x
+utile](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/16bit/end_x.png){#16bit_pi_x
 width="100%"}
 
 Prendendo un istante di tempo generico, nel nostro caso fissato a
@@ -400,7 +265,7 @@ possiamo affermare che il ritardo medio che si verifica consiste proprio
 nel valore iniziale osservato di 11,8 ns.
 
 ![Dimostrazione ritardo di 11,8
-ns](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/16bit/random_val.png){#random_val16
+ns](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/16bit/random_val.png){#random_val16
 width="100%"}
 
 La temperatura del circuito raggiunge una quota insostenibile, a fronte
@@ -411,7 +276,7 @@ la possiede un limite massimo a 125 gradi Celsius, che verrebbero quindi
 ampiamente superati.
 
 ![Total On-Chip Power e Junction
-Temperature](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/simulations/Post_Implementation/16bit/power.png){#16bit_power
+Temperature](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/simulations/Post_Implementation/16bit/power.png){#16bit_power
 width="100%"}
 
 ### LUT Tables
@@ -437,7 +302,7 @@ reference="lut_schematic_16bit"}*
 :::
 
 ![Schematica circuito
-reale](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/formal_report/assets/LUT/16bit/LUT_schematic_16bit.png){#lut_schematic_16bit
+reale](https://github.com/Zi0LEO/elettronica_digitale/blob/main/mini_alu/report/assets/LUT/16bit/LUT_schematic_16bit.png){#lut_schematic_16bit
 width="100%"}
 
 L'utilizzazione è invece riportata in
