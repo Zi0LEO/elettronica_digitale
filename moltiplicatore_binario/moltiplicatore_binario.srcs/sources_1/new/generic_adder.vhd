@@ -18,7 +18,6 @@ component fulladder_1bit is
     end component;
     signal carry : STD_LOGIC_VECTOR( bit_number+1 downto 0 );
 begin  
-    
     carry (0) <= '0';
     
     gen_adder: for i in 0 to bit_number generate
