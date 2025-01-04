@@ -34,7 +34,9 @@ architecture Behavioral of moltiplicatore is
       temp(j) <= A(i) and B(j);
     end generate inner;
     --Shift to the left
-    p(i) <= ((nbit*2)-1 downto (nbit+i) => '0') & temp & (i downto 0 => '0');
+    p(i) <= (others => '0') when i = 0 else
+         ((nbit*2)-1 downto (nbit+i) => '0') & temp & (i-1 downto 0 => '0');
+    --p(i) <= ((nbit*2)-1 downto (nbit+i) => '0') & temp & (i downto 0 => '0');
   end generate outer;
   
   --Add them together

@@ -18,11 +18,16 @@ architecture Behavioral of carry_save_adder is
       sum_adder : out STD_LOGIC_VECTOR (bit_number downto 0));
   end component;
         
+<<<<<<< HEAD
   signal sub_sum, carry : STD_LOGIC_VECTOR (nbit-1 downto 0);
   signal sub_sum_ext, carry_ext : STD_LOGIC_VECTOR (nbit downto 0);
   signal temp_sum : STD_LOGIC_VECTOR (nbit+1 downto 0);
   
   signal ext_carry_in : STD_LOGIC_VECTOR(nbit-1 downto 0);
+=======
+    signal sub_sum,carry : STD_LOGIC_VECTOR (nbit-1 downto 0);
+    signal sub_sum_ext,carry_ext : STD_LOGIC_VECTOR (nbit downto 0);
+>>>>>>> parent of 155c5e9 (minor fix)
         
   begin
     ext_carry_in <= (nbit-3 downto 0 => '0') & carry_in;
