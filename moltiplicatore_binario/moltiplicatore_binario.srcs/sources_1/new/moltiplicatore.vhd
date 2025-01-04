@@ -1,33 +1,58 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity moltiplicatore is
     generic (nbit : INTEGER := 16);
-    Port ( A : in STD_LOGIC_VECTOR (nbit-1 downto 0);
-           B : in STD_LOGIC_VECTOR (nbit-1 downto 0);
-           prod : out STD_LOGIC_VECTOR ((nbit*2)-1 downto 0));
+    Port ( A : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
+           B : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
+           prod : out STD_LOGIC_VECTOR ((nbit*2)-1 downto 0)); --32bit
 end moltiplicatore;
 
 architecture Behavioral of moltiplicatore is
-    type MAT is array ( nbit-1 downto 0 ) of STD_LOGIC_VECTOR((nbit*2)-1 downto 0);
-    signal p : MAT;
-begin 
-    logicand: for i in nbit-2 downto 0 generate
-           p(i) <= A and B(i);
-    end generate;
-    p(nbit-1) <= B(nbit-1 downto 0);
+  component carry_save_adder
+    generic (nbit2 : INTEGER := nbit*2);
+      Port (
+        A,B,C : in STD_LOGIC_VECTOR (nbit2-1 downto 0); --32 bit
+        carry_in : in STD_LOGIC_VECTOR(1 downto 0);
+        carry_out : out STD_LOGIC_VECTOR(1 downto 0);
+        sum : out STD_LOGIC_VECTOR (nbit2+1 downto 0)); --34bit, because it adds 3 numbers   
+  end component;
+  
+    type MAT is array ( nbit-1 downto 0 ) of STD_LOGIC_VECTOR((nbit*2)-1 downto 0); --32bit
+    signal p : MAT; --32bit
+    signal temp : STD_LOGIC_VECTOR(nbit-1 downto 0); --16bit
+    signal temp_sum : STD_LOGIC_VECTOR(nbit*2 - 1 downto 0); --32bit
+    signal carry: STD_LOGIC_VECTOR(nbit*2 - 1 downto 0);
+    signal temp_carry_out: STD_LOGIC_VECTOR(1 downto 0);
     
-    outer :for i in nbit-2 downto 0 generate
-        inner_left : for k in i downto 0 generate 
-            p(i) <= p(i) & "0";
-        end generate;
-        
-        inner_right : for k in nbit*2-(i+1) downto 1 generate
-            p(i) <= "0" & p(i);
-        end generate;
-        
-    end generate;
+  begin 
+  -- Generate partial products
+  outer: for i in 0 to nbit-1 generate
+    temp <= (others => '0'); --16bit
+    inner: for j in 0 to nbit-1 generate
+      temp(j) <= A(i) and B(j);
+    end generate inner;
+    --Shift to the left
+    p(i) <= ((nbit*2)-1 downto (nbit+i) => '0') & temp & (i downto 0 => '0');
+  end generate outer;
+  
+  --Add them together
+  prod <= (others => '0');
+  add: for i in 0 to nbit-1 generate
+    temp_sum <= (others => '0');
     
-    
-    
+    adder:carry_save_adder
+      PORT MAP(
+        A   => temp_sum, --32bit
+        B   => p(i*2), --32bit
+        C   => p(i*2+1), --32bit
+        carry_in => carry(i*2) & carry(i*2+1),
+        carry_out => temp_carry_out,
+        sum => temp_sum); --32bit
+    carry((i+1)*2) <= temp_carry_out(0);
+    carry((i+1)*2+1) <= temp_carry_out(1);
+   end generate add;
+   prod <= temp_sum;
+
 end Behavioral;
