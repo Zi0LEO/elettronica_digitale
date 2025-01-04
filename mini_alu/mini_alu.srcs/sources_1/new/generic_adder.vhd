@@ -1,9 +1,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
+library work;
+use work.constants.all;
 
 entity generic_adder is
-    generic (bit_number : INTEGER := 4);
+    generic (bit_number : INTEGER := nbit);
     Port ( A_adder,B_adder: in STD_LOGIC_VECTOR (bit_number-1 downto 0);
          cin : in STD_LOGIC;
          sum : out STD_LOGIC_VECTOR (bit_number downto 0));

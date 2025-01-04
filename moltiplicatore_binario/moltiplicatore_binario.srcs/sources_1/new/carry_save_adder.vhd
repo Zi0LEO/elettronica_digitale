@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
     
 entity carry_save_adder is
- generic (nbit : INTEGER);
+ generic (nbit : INTEGER := 32);
      Port ( 
        A,B,C: in STD_LOGIC_VECTOR (nbit-1 downto 0);
-       sum: out STD_LOGIC_VECTOR (nbit+1 downto 0));
+       sum: out STD_LOGIC_VECTOR (nbit downto 0));
 end carry_save_adder;
     
 architecture Behavioral of carry_save_adder is
