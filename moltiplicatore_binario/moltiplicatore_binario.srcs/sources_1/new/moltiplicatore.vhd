@@ -20,7 +20,7 @@ architecture Behavioral of moltiplicatore is
     type MAT is array ( nbit-1 downto 0 ) of STD_LOGIC_VECTOR((nbit*2)-1 downto 0); --32bit
     signal p : MAT; --32bit
     signal temp : STD_LOGIC_VECTOR(nbit-1 downto 0); --16bit
-    signal temp_sum : STD_LOGIC_VECTOR(nbit*2 - 1 downto 0); --32bit
+    signal temp_sum : STD_LOGIC_VECTOR(nbit*2+1 downto 0); --32bit
   begin 
   -- Generate partial products
   outer: for i in 0 to nbit-1 generate
@@ -39,10 +39,11 @@ architecture Behavioral of moltiplicatore is
     temp_sum <= (others => '0');
     adder: carry_save_adder -- iter0 = 18bit in, 20bit out. iter1 = 21bit in, 23 bit out. iter2 = 24 bit in, 26 bit out, iter3 = 26bit in, 28 bit out;
       PORT MAP(
-        A   => p(i*3)(nbit + 1 + i*3 downto 0),
-        B   => p(i*3+1)(nbit + 1 + i*3 downto 0),
-        C   => p(i*3+2)(nbit + 1 + i*3 downto 0),
-        sum => p(i));
+        A   => p(i*3),
+        B   => p(i*3+1),
+        C   => p(i*3+2),
+        sum => temp_sum);
+      p(i) <= temp_sum(nbit*2 -1 downto 0);
     end generate add;
 
   level2_adder: carry_save_adder --26bit in, 28bit out
