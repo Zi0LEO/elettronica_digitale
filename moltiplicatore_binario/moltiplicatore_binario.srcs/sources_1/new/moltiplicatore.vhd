@@ -37,9 +37,6 @@ architecture Behavioral of moltiplicatore is
   prod <= (others => '0');
   add: for i in 0 to (nbit-1)/3 - 1 generate  --p(15) does not get computed
     temp_sum <= (others => '0');
-<<<<<<< HEAD
-    adder: carry_save_adder -- iter0 = 18bit in, 20bit out. iter1 = 21bit in, 23 bit out. iter2 = 24 bit in, 26 bit out, iter3 = 26bit in, 28 bit out;
-=======
    
   --aggiungo gli ultimi due bit a p come tutti 0 e l'ultimo bit di B in mezzo
   p(nbit) <= ((nbit/2 downto 0 => '0') & B(nbit-1)) & ((nbit/2)-1  downto 0 => '0');
@@ -48,7 +45,6 @@ architecture Behavioral of moltiplicatore is
     
   --l'adder tree avrà 18 ingressi quindi 
     adder:carry_save_adder
->>>>>>> origin/main
       PORT MAP(
         A   => p(i*3),
         B   => p(i*3+1),
