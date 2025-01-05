@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity generic_adder is
-    generic (bit_number : INTEGER := 32);
+    generic (bit_number : INTEGER := 37);
     Port ( A_adder,B_adder: in STD_LOGIC_VECTOR (bit_number downto 0);
          sum_adder : out STD_LOGIC_VECTOR (bit_number+1 downto 0));
 end generic_adder;
@@ -16,7 +16,7 @@ component fulladder_1bit is
              carry_out : out STD_LOGIC;
              sum : out STD_LOGIC);
     end component;
-    signal carry : STD_LOGIC_VECTOR( bit_number downto 0 );
+    signal carry : STD_LOGIC_VECTOR( bit_number+1 downto 0 );
 begin  
     carry (0) <= '0';
     
@@ -26,7 +26,7 @@ begin
                 A         => A_adder(i),
                 B         => B_adder(i),
                 carry_in  => carry(i),
-                carry_out => carry(i + 1),
+                carry_out => carry(i+1),
                 sum       => sum_adder(i)
             );
     end generate;

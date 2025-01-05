@@ -17,7 +17,7 @@ architecture Behavioral of moltiplicatore is
         sum : out STD_LOGIC_VECTOR (nbit2+1 downto 0)); --34bit, because it adds 3 numbers   
   end component;
   
-    type MAT is array ( nbit-1 downto 0 ) of STD_LOGIC_VECTOR((nbit*2)-1 downto 0); --32bit
+    type MAT is array ( nbit+1 downto 0 ) of STD_LOGIC_VECTOR((nbit*2)-1 downto 0); --32bit
     signal p : MAT; --32bit
     signal temp : STD_LOGIC_VECTOR(nbit-1 downto 0); --16bit
     signal temp_sum : STD_LOGIC_VECTOR(nbit*2+1 downto 0); --32bit
@@ -37,7 +37,18 @@ architecture Behavioral of moltiplicatore is
   prod <= (others => '0');
   add: for i in 0 to (nbit-1)/3 - 1 generate  --p(15) does not get computed
     temp_sum <= (others => '0');
+<<<<<<< HEAD
     adder: carry_save_adder -- iter0 = 18bit in, 20bit out. iter1 = 21bit in, 23 bit out. iter2 = 24 bit in, 26 bit out, iter3 = 26bit in, 28 bit out;
+=======
+   
+  --aggiungo gli ultimi due bit a p come tutti 0 e l'ultimo bit di B in mezzo
+  p(nbit) <= ((nbit/2 downto 0 => '0') & B(nbit-1)) & ((nbit/2)-1  downto 0 => '0');
+  --lo xor dell'ultimo prodotto parziale esteso con gli 0 alla fine
+  p(nbit+1) <= (B(nbit-1) xor (B(nbit-1) and A)) & (((nbit/2)-1  downto 0 => '0'));
+    
+  --l'adder tree avrà 18 ingressi quindi 
+    adder:carry_save_adder
+>>>>>>> origin/main
       PORT MAP(
         A   => p(i*3),
         B   => p(i*3+1),
