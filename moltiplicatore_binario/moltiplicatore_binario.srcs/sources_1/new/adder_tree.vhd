@@ -77,9 +77,3 @@ begin
     final_adder: generic_adder
       PORT MAP (sum_final, carry_final, ris);
 end Behavioral;
-
-
-
-
-
-

@@ -3,11 +3,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity testench_moltiplicatore is
+ generic (nbit : INTEGER := 16);
 end testench_moltiplicatore;
 
 architecture Behavioral of testench_moltiplicatore is
   component moltiplicatore is
-    generic (nbit : INTEGER := 16);
     port ( 
       A : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
       B : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
@@ -22,7 +22,6 @@ architecture Behavioral of testench_moltiplicatore is
   
 begin
   CUT: moltiplicatore 
-    GENERIC MAP(nbit => 16) 
     PORT MAP(A => IA, B => IB, clk => Iclk, prod => Oprod);
 
   process
