@@ -16,7 +16,7 @@ component fulladder_1bit is
              carry_out : out STD_LOGIC;
              sum : out STD_LOGIC);
     end component;
-    signal carry : STD_LOGIC_VECTOR( bit_number downto 0 );
+    signal carry : STD_LOGIC_VECTOR( bit_number-1 downto 0 );
 begin  
     carry (0) <= '0';
     
@@ -31,6 +31,6 @@ begin
             );
     end generate;
     
-    sum_adder(bit_number-1) <= carry(bit_number);
+    sum_adder(bit_number-1) <= carry(bit_number-1);
     
 end Behavioral;

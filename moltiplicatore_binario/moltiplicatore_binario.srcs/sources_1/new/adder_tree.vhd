@@ -48,7 +48,7 @@ architecture Behavioral of adder_tree is
      
      signal garbage: STD_LOGIC;
      
-begin
+begin 
     --lvl_0
     level0_adder: for i in 0 to (nbit/2)/3 - 1 generate
       adder0: carry_save_adder 
