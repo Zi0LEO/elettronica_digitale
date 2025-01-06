@@ -27,8 +27,8 @@ begin
   begin
     
     -- Test 1: A = 0, B = 0
-    IA <= std_logic_vector(to_unsigned(65535, IA'length)); -- Assign 0 directly
-    IB <= std_logic_vector(to_unsigned(65535, IB'length));
+    IA <= std_logic_vector(to_unsigned(32, IA'length)); -- Assign 0 directly
+    IB <= std_logic_vector(to_unsigned(32, IB'length));
     wait for Tclk;
  
     -- Test 1: A = 0, B = 1

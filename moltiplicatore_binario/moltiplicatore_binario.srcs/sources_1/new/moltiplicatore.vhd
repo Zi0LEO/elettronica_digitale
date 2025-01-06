@@ -27,25 +27,23 @@ architecture Behavioral of moltiplicatore is
   variable bucket: STD_LOGIC_VECTOR((nbit*2)-2 downto 0);
 
   begin
-    
-    zeros <= (others => '0');
+   
     if rising_edge(clk) then
       IA <= A;
       IB <= B;
       prod <= Oprod;
+      zeros <= (others => '0');  
       
       outer: for i in nbit-1 downto 0 loop
         inner: for j in nbit-1 downto 0 loop
           bucket(j) := IA(i) and IB(j);
         end loop inner;
         
-        bucket := zeros(nbit-1-i downto 0) & bucket((nbit*2-2)-(nbit-i) downto 0);
-        bucket := bucket(nbit*2-2 downto i) & zeros(i-1 downto 0);
-        
-        p(i) <= bucket;
-        
-      end loop outer; 
-      end if;
+      bucket := zeros(nbit-2 downto 0) & bucket (nbit-1 downto 0);
+      p(i) <= STD_LOGIC_VECTOR(shift_left(UNSIGNED(bucket),i));
+      
+      end loop outer;
+     end if;
   end process;
   
   adder:adder_tree
