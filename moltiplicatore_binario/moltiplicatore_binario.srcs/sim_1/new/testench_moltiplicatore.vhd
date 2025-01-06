@@ -11,14 +11,17 @@ architecture Behavioral of testench_moltiplicatore is
     port ( 
       A : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
       B : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
+      clk: in STD_LOGIC;
       prod : out STD_LOGIC_VECTOR ((nbit*2)-1 downto 0)); --32bit
   end component;
   
   signal IA, IB : STD_LOGIC_VECTOR (15 downto 0);
   signal Oprod : STD_LOGIC_VECTOR(31 downto 0);
+  signal Iclk: STD_LOGIC := '0';
+  constant Tclk : time := 1000ns;
   
 begin
-  CUT: moltiplicatore port map(IA,IB,Oprod);
+  CUT: moltiplicatore port map(IA,IB,Iclk,Oprod);
 
   process
   begin
@@ -26,16 +29,18 @@ begin
     -- Test 1: A = 0, B = 0
     IA <= std_logic_vector(to_unsigned(65535, IA'length)); -- Assign 0 directly
     IB <= std_logic_vector(to_unsigned(65535, IB'length));
-    wait for 100 ms;
---    assert (Oprod = std_logic_vector(to_unsigned(0,Oprod'length))
---    report "Test 1 Fallito." severity error;
-        
+    wait for Tclk;
+ 
     -- Test 1: A = 0, B = 1
     IA <= (others => '0'); -- Assign 0 directly
     IB <= std_logic_vector(to_unsigned(1, IB'length));
-    wait for 100 ms;
---    assert (Oprod = (others => '0'))
---    report "Test 2 Fallito." severity error;
+    wait for Tclk;
     
   end process;
+  
+  process
+  begin
+    wait for Tclk/2;
+    Iclk <= not Iclk;
+    end process;
 end Behavioral;

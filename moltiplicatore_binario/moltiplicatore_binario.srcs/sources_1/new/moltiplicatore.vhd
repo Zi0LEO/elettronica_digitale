@@ -1,12 +1,14 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 use work.AdderTree_Types.all;
 
 entity moltiplicatore is
     generic (nbit : INTEGER := 16);
-    Port ( A : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
-           B : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
-           prod : out STD_LOGIC_VECTOR ((nbit*2)-1 downto 0)); --32bit
+    Port ( 
+      A,B : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
+      clk: in STD_LOGIC;
+      prod : out STD_LOGIC_VECTOR ((nbit*2)-1 downto 0)); --32bit
 end moltiplicatore;
 
 architecture Behavioral of moltiplicatore is
@@ -15,23 +17,34 @@ architecture Behavioral of moltiplicatore is
             ris : out STD_LOGIC_VECTOR(nbit*2-1 downto 0));
   end component;
   
-    signal p : MAT; --32bit
-  begin 
-  -- Generate partial products
-  outer: for i in 0 to nbit-1 generate
-    inner: for j in 0 to nbit-1 generate
-        -- Clear the higher part of p(i)
-        p(i)(nbit*2-2 downto nbit+i) <= (others => '0');
-        
-        -- Set the middle part of p(i) with the partial product A(i) and B(j)
-        p(i)(i+j) <= (A(i) and B(j));
-        
-        -- Clear the lower part of p(i)
-        p(i)(i downto 0) <= (others => '0');
-    end generate inner;
-  end generate outer; 
-      
-  adder:adder_tree
-    PORT MAP(p, prod);
+  signal p: MAT; --signal
+  signal IA, IB: STD_LOGIC_VECTOR(nbit-1 downto 0);
+  signal Oprod: STD_LOGIC_VECTOR(nbit*2 -1 downto 0);
   
+  begin     
+  
+  partial_products:process(clk)
+  begin
+    if rising_edge(clk) then
+      outer: for i in 0 to nbit-1 loop
+        p(i) <= (others => '0');
+        inner: for j in 0 to nbit-1 loop
+          p(i)(j) <= IA(i) and IB(j);
+        end loop inner;
+        p(i) <= std_logic_vector(shift_left(unsigned(p(i)), i));
+      end loop outer; 
+      end if;
+  end process;
+  
+  process(clk)
+  begin
+    if rising_edge(clk) then
+      IA <= A;
+      IB <= B;
+      prod <= Oprod;
+    end if;
+  end process;
+  adder:adder_tree
+    PORT MAP(p, Oprod);
+    
 end Behavioral;
