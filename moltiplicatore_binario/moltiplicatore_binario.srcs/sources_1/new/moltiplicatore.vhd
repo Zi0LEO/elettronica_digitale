@@ -17,7 +17,7 @@ architecture Behavioral of moltiplicatore is
             ris : out STD_LOGIC_VECTOR(nbit*2-1 downto 0));
   end component;
   
-  signal p: MAT; --signal
+  signal p: MAT;
   signal IA, IB: STD_LOGIC_VECTOR(nbit-1 downto 0);
   signal Oprod: STD_LOGIC_VECTOR(nbit*2 -1 downto 0);
   

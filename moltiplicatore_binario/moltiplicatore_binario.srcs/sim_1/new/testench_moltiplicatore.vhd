@@ -7,7 +7,7 @@ end testench_moltiplicatore;
 
 architecture Behavioral of testench_moltiplicatore is
   component moltiplicatore is
-    generic (nbit : INTEGER := 16);
+    generic (nbit : INTEGER);
     port ( 
       A : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
       B : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit

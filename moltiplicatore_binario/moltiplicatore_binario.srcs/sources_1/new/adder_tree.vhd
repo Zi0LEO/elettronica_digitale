@@ -75,7 +75,7 @@ begin
     adder50: carry_save_adder PORT MAP(sum_4, carry_4, carry_3(1),sum(30 downto 0) => sum_final, sum(31) => garbage, carry(30 downto 0) => carry_final, carry(31) => garbage);
 
     final_adder: generic_adder
-      PORT MAP (sum_final, carry_final,ris);
+      PORT MAP (sum_final, carry_final, ris);
 end Behavioral;
 
 
