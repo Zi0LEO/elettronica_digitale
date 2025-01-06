@@ -31,7 +31,6 @@ architecture Behavioral of moltiplicatore is
     if rising_edge(clk) then
       IA <= A;
       IB <= B;
-      prod <= Oprod;
       zeros <= (others => '0');  
       
       outer: for i in nbit-1 downto 0 loop
@@ -48,5 +47,7 @@ architecture Behavioral of moltiplicatore is
   
   adder:adder_tree
     PORT MAP(p, Oprod);
+    
+  prod <= Oprod;
     
 end Behavioral;

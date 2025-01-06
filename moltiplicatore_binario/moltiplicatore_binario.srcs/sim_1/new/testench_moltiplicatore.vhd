@@ -18,29 +18,35 @@ architecture Behavioral of testench_moltiplicatore is
   signal IA, IB : STD_LOGIC_VECTOR (15 downto 0);
   signal Oprod : STD_LOGIC_VECTOR(31 downto 0);
   signal Iclk: STD_LOGIC := '0';
-  constant Tclk : time := 1000ns;
+  constant Tclk : time := 10ns;
   
 begin
-  CUT: moltiplicatore GENERIC MAP(16) PORT MAP(IA,IB,Iclk,Oprod);
+  CUT: moltiplicatore 
+    GENERIC MAP(nbit => 16) 
+    PORT MAP(A => IA, B => IB, clk => Iclk, prod => Oprod);
 
   process
   begin
     
-    -- Test 1: A = 0, B = 0
-    IA <= std_logic_vector(to_unsigned(32, IA'length)); -- Assign 0 directly
-    IB <= std_logic_vector(to_unsigned(32, IB'length));
-    wait for Tclk;
- 
-    -- Test 1: A = 0, B = 1
-    IA <= (others => '0'); -- Assign 0 directly
+    -- Test 1: A = 1, B = 1
+    IA <= std_logic_vector(to_unsigned(1, IA'length)); -- Assign 0 directly
     IB <= std_logic_vector(to_unsigned(1, IB'length));
     wait for Tclk;
-    
-      -- Test 1: A = 0, B = 1
-    IA<= std_logic_vector(to_unsigned(3, IA'length)); -- Assign 0 directly
-    IB <= std_logic_vector(to_unsigned(4, IB'length));
+ 
+    -- Test 2: A = 0, B = 10000
+    IA <= std_logic_vector(to_unsigned(0, IA'length));
+    IB <= std_logic_vector(to_unsigned(10000, IB'length));
     wait for Tclk;
+   
+    -- Test 3: A = 100, B = 25
+    IA <= std_logic_vector(to_unsigned(100, IA'length));
+    IB <= std_logic_vector(to_unsigned(25, IB'length));
+    wait for Tclk;    
     
+    -- Test 4: A = 1, B = 15
+    IA <= std_logic_vector(to_unsigned(1, IA'length));
+    IB <= std_logic_vector(to_unsigned(15, IB'length));
+    wait for Tclk;
   end process;
   
   process
