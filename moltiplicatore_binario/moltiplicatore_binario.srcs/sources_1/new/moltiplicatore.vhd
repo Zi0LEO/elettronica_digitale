@@ -19,31 +19,35 @@ architecture Behavioral of moltiplicatore is
   
   signal p: MAT;
   signal IA, IB: STD_LOGIC_VECTOR(nbit-1 downto 0);
-  signal Oprod: STD_LOGIC_VECTOR(nbit*2 -1 downto 0);
-  
+  signal Oprod: STD_LOGIC_VECTOR((nbit*2)-1 downto 0);
+  signal zeros: STD_LOGIC_VECTOR(nbit-1 downto 0);
   begin     
   
   partial_products:process(clk)
+  variable bucket: STD_LOGIC_VECTOR((nbit*2)-2 downto 0);
+
   begin
-    if rising_edge(clk) then
-      outer: for i in 0 to nbit-1 loop
-        p(i) <= (others => '0');
-        inner: for j in 0 to nbit-1 loop
-          p(i)(j) <= IA(i) and IB(j);
-        end loop inner;
-        p(i) <= std_logic_vector(shift_left(unsigned(p(i)), i));
-      end loop outer; 
-      end if;
-  end process;
-  
-  process(clk)
-  begin
+    
+    zeros <= (others => '0');
     if rising_edge(clk) then
       IA <= A;
       IB <= B;
       prod <= Oprod;
-    end if;
+      
+      outer: for i in nbit-1 downto 0 loop
+        inner: for j in nbit-1 downto 0 loop
+          bucket(j) := IA(i) and IB(j);
+        end loop inner;
+        
+        bucket := zeros(nbit-1-i downto 0) & bucket((nbit*2-2)-(nbit-i) downto 0);
+        bucket := bucket(nbit*2-2 downto i) & zeros(i-1 downto 0);
+        
+        p(i) <= bucket;
+        
+      end loop outer; 
+      end if;
   end process;
+  
   adder:adder_tree
     PORT MAP(p, Oprod);
     

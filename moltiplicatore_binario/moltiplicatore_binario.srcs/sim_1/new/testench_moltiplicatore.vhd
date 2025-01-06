@@ -7,7 +7,7 @@ end testench_moltiplicatore;
 
 architecture Behavioral of testench_moltiplicatore is
   component moltiplicatore is
-    generic (nbit : INTEGER);
+    generic (nbit : INTEGER := 16);
     port ( 
       A : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
       B : in STD_LOGIC_VECTOR (nbit-1 downto 0); --16bit
@@ -21,7 +21,7 @@ architecture Behavioral of testench_moltiplicatore is
   constant Tclk : time := 1000ns;
   
 begin
-  CUT: moltiplicatore port map(IA,IB,Iclk,Oprod);
+  CUT: moltiplicatore GENERIC MAP(16) PORT MAP(IA,IB,Iclk,Oprod);
 
   process
   begin
@@ -34,6 +34,11 @@ begin
     -- Test 1: A = 0, B = 1
     IA <= (others => '0'); -- Assign 0 directly
     IB <= std_logic_vector(to_unsigned(1, IB'length));
+    wait for Tclk;
+    
+      -- Test 1: A = 0, B = 1
+    IA<= std_logic_vector(to_unsigned(3, IA'length)); -- Assign 0 directly
+    IB <= std_logic_vector(to_unsigned(4, IB'length));
     wait for Tclk;
     
   end process;
